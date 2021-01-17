@@ -1,0 +1,1 @@
+from model.raw_news import RawNewsEntity

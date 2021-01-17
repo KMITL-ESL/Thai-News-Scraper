@@ -1,10 +1,15 @@
-from urllib.parse import urlparse
+import logging
+import uuid
 from datetime import datetime
+from urllib.parse import urlparse
+
 import requests
 from bs4 import BeautifulSoup
+from model import RawNewsEntity
 from util import constants
+
 from agency import Agency
-import logging
+
 
 class DailynewsAgency(Agency):
 
@@ -21,7 +26,7 @@ class DailynewsAgency(Agency):
         date = datetime.strptime(date_text, r'%d %B %Y %H.%M')
         return date
 
-    async def call(self, url):
+    async def call(self, url) -> RawNewsEntity:
         soup = await self.scrap_html(url)
 
         logging.info(url)
@@ -32,6 +37,14 @@ class DailynewsAgency(Agency):
         content = soup.find('div', attrs={'class': 'content-all'}).text.strip()
         tags = soup.find('ol', attrs={'class': 'breadcrumb'}).find_all('li')
         category = tags[-1].text.strip()
+        return RawNewsEntity(id=str(uuid.uuid4()),
+                             publish_date=date,
+                             title=title,
+                             content=content,
+                             created_at=datetime.now(),
+                             source='DAILYNEWS',
+                             link=url
+                             )
 
     async def scrap_links(self, index_url, from_date, to_date, max_news):
         root_url = urlparse(index_url).hostname
@@ -40,7 +53,7 @@ class DailynewsAgency(Agency):
         page_number = 1
         all_links = set()
         while len(all_links) < max_news:
-            
+
             soup = await self.scrap_html(index_url, params={'page': page_number})
             logging.info(f'page {page_number}')
             articles = soup.find_all('a', attrs={'class': 'media'}, href=True)
@@ -55,7 +68,7 @@ class DailynewsAgency(Agency):
 
             min_date = min(dates)
             max_date = max(dates)
-            
+
             links = list(
                 map(lambda link: f'https://{root_url}{link["href"]}', articles))
             for date, link in zip(dates, links):
