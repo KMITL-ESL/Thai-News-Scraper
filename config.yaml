@@ -1,0 +1,9 @@
+db:
+  username: postgres
+  password: 1234
+  host: localhost
+  port: 5432
+  database: postgres
+  echo: False
+logger:
+  level: INFO
