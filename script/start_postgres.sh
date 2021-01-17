@@ -1,1 +1,1 @@
-docker run --name news-db -p 5432:5432 -e POSTGRES_PASSWORD=esl2 -d postgres
+docker run --name news-db -p 5432:5432 -e POSTGRES_PASSWORD=1234 -d postgres
