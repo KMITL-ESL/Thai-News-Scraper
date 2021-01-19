@@ -11,6 +11,10 @@ logging.basicConfig(level=logging.INFO)
 
 async def scrap(agency, link):
     raw_news_entity = await agency.call(link)
+    if raw_news_entity is None:
+        logging.error(f'failed to create raw_news_entity on {link}')
+        return
+
     logging.info(raw_news_entity)
     try:
         db.add(raw_news_entity)
@@ -18,6 +22,9 @@ async def scrap(agency, link):
     except IntegrityError:
         db.rollback()
         logging.info(f'Duplicated {raw_news_entity.link}')
+    except:
+        logging.error(f'failed to store raw_news_entity')
+        
 async def main():
     index_url = 'https://www.dailynews.co.th/economic'
     agency = DailynewsAgency()

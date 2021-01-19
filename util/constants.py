@@ -12,3 +12,5 @@ TH_FULL_MONTHS_MAPPER = {
     "พฤศจิกายน": 'November',
     "ธันวาคม": 'December',
 }
+
+DAILYNEWS_MAX_NUM_PER_PAGE = 10

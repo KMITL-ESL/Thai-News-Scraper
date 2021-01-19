@@ -28,8 +28,12 @@ class DailynewsAgency(Agency):
 
     async def call(self, url) -> RawNewsEntity:
         soup = await self.scrap_html(url)
+        if soup is None:
+            logging.error(f'failed to obtain {url}')
+            return
 
-        logging.info(url)
+        logging.info(f'scrap {url}')
+
         title = soup.find('h1', attrs={'class': 'title'}).text.strip()
         date_text = soup.find('span', attrs={'class': 'date'}).text.strip()
         date = self.parse_date(date_text)
@@ -51,10 +55,16 @@ class DailynewsAgency(Agency):
         topic = index_url.split('/')[-1]
 
         page_number = 1
+
         all_links = set()
-        while len(all_links) < max_news:
+        for page_number in range(1, (max_news//constants.DAILYNEWS_MAX_NUM_PER_PAGE)+1):
 
             soup = await self.scrap_html(index_url, params={'page': page_number})
+            if soup is None:
+                logging.error(
+                    f'failed to obtain {index_url} with page {page_number}')
+                continue
+
             logging.info(f'page {page_number}')
             articles = soup.find_all('a', attrs={'class': 'media'}, href=True)
             # filter article only the article that contains date
@@ -77,5 +87,4 @@ class DailynewsAgency(Agency):
             if min_date < from_date:
                 break
 
-            page_number += 1
         return all_links
