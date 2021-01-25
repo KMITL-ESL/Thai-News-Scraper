@@ -1,10 +1,13 @@
+import asyncio
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
+from typing import List
 from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
+from config import config
 from model import RawNewsEntity
 from util import constants
 
@@ -12,6 +15,8 @@ from agency import Agency
 
 
 class DailynewsAgency(Agency):
+    def __init__(self, config):
+        self.config = config
 
     def parse_date(self, date_text) -> datetime:
 
@@ -26,34 +31,9 @@ class DailynewsAgency(Agency):
         date = datetime.strptime(date_text, r'%d %B %Y %H.%M')
         return date
 
-    async def call(self, url) -> RawNewsEntity:
-        soup = await self.scrap_html(url)
-        if soup is None:
-            logging.error(f'failed to obtain {url}')
-            return
-
-        logging.info(f'scrap {url}')
-
-        title = soup.find('h1', attrs={'class': 'title'}).text.strip()
-        date_text = soup.find('span', attrs={'class': 'date'}).text.strip()
-        date = self.parse_date(date_text)
-        logging.info(date)
-        content = soup.find('div', attrs={'class': 'content-all'}).text.strip()
-        tags = soup.find('ol', attrs={'class': 'breadcrumb'}).find_all('li')
-        category = tags[-1].text.strip()
-        return RawNewsEntity(publish_date=date,
-                             title=title,
-                             content=content,
-                             created_at=datetime.now(),
-                             source='DAILYNEWS',
-                             link=url
-                             )
-
     async def scrap_links(self, index_url, from_date, to_date, max_news):
         root_url = urlparse(index_url).hostname
         topic = index_url.split('/')[-1]
-
-        page_number = 1
 
         all_links = set()
         for page_number in range(1, (max_news//constants.DAILYNEWS_MAX_NUM_PER_PAGE)+1):
@@ -87,3 +67,41 @@ class DailynewsAgency(Agency):
                 break
 
         return all_links
+
+    async def call(self, url) -> RawNewsEntity:
+        soup = await self.scrap_html(url)
+        if soup is None:
+            logging.error(f'failed to obtain {url}')
+            return
+
+        logging.info(f'scrap {url}')
+
+        title = soup.find('h1', attrs={'class': 'title'}).text.strip()
+        date_text = soup.find('span', attrs={'class': 'date'}).text.strip()
+        date = self.parse_date(date_text)
+        logging.info(date)
+        content = soup.find('div', attrs={'class': 'content-all'}).text.strip()
+        tags = soup.find('ol', attrs={'class': 'breadcrumb'}).find_all('li')
+        category = tags[-1].text.strip()
+        return RawNewsEntity(publish_date=date,
+                             title=title,
+                             content=content,
+                             created_at=datetime.now(),
+                             source='DAILYNEWS',
+                             link=url
+                             )
+
+    async def scrap(self) -> List[RawNewsEntity]:
+        index_urls = self.config['indexes']
+        links = set()
+        for index_url in index_urls:
+            _links = await self.scrap_links(index_url,
+                                            from_date=datetime.now() -
+                                            timedelta(
+                                                days=self.config['since_datedelta']),
+                                            to_date=datetime.now(),
+                                            max_news=self.config['max_news_per_batch'])
+            links.update(_links)
+
+        logging.info(f'number of link = {len(links)}')
+        return await asyncio.gather(*[self.call(link) for link in links])

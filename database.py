@@ -16,4 +16,4 @@ engine = create_engine(URL(drivername='postgres+psycopg2',
                            database=db_config['database']),
                        echo=db_config['echo'])
 Session = sessionmaker(bind=engine)
-db = Session()
+db: Session = Session()

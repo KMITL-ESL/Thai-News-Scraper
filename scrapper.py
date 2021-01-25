@@ -5,16 +5,15 @@ from datetime import datetime, timedelta
 from sqlalchemy.exc import IntegrityError
 
 from agency import DailynewsAgency
+from model import RawNewsEntity
 from database import db
+from config import config
 
 logging.basicConfig(level=logging.INFO)
-
-async def scrap(agency, link):
-    raw_news_entity = await agency.call(link)
+def insert_raw_news(raw_news_entity: RawNewsEntity):
     if raw_news_entity is None:
-        logging.error(f'failed to create raw_news_entity on {link}')
+        logging.error(f'failed to create raw_news_entity')
         return
-
     logging.info(raw_news_entity)
     try:
         db.add(raw_news_entity)
@@ -25,16 +24,16 @@ async def scrap(agency, link):
     except Exception as err :
         logging.error(f'failed to store raw_news_entity')
         logging.error(err)
+
+dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
+async def scrap_dailynews():
+
+    raw_news_entities = await dailynews_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+    
         
 async def main():
-    index_url = 'https://www.dailynews.co.th/economic'
-    agency = DailynewsAgency()
-    links = await agency.scrap_links(index_url,
-                                     from_date=datetime.now() - timedelta(days=1),
-                                     to_date=datetime.now(),
-                                     max_news=1000)
-
-    logging.info(f'number of link = {len(links)}')
-    await asyncio.gather(*[scrap(agency, link) for link in links])
+    await scrap_dailynews()
 
 asyncio.run(main())

@@ -7,3 +7,9 @@ db:
   echo: False
 logger:
   level: INFO
+agency:
+  dailynews:
+    since_datedelta: 1
+    max_news_per_batch: 1000
+    indexes:
+      - https://www.dailynews.co.th/economic
