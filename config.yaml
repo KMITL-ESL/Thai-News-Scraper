@@ -9,6 +9,11 @@ logger:
   level: INFO
 agency:
   dailynews:
+    scheduler:
+      - hour: 0
+        minute: 0
+      - hour: 12
+        minute: 0
     since_datedelta: 1
     max_news_per_batch: 1000
     indexes:

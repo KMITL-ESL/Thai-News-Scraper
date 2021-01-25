@@ -9,7 +9,11 @@ from model import RawNewsEntity
 from database import db
 from config import config
 
+dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
+
 logging.basicConfig(level=logging.INFO)
+
+
 def insert_raw_news(raw_news_entity: RawNewsEntity):
     if raw_news_entity is None:
         logging.error(f'failed to create raw_news_entity')
@@ -25,15 +29,16 @@ def insert_raw_news(raw_news_entity: RawNewsEntity):
         logging.error(f'failed to store raw_news_entity')
         logging.error(err)
 
-dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
-async def scrap_dailynews():
 
+async def scrap_dailynews():
     raw_news_entities = await dailynews_agency.scrap()
     for entity in raw_news_entities:
         insert_raw_news(entity)
-    
-        
+
+
 async def main():
     await scrap_dailynews()
 
-asyncio.run(main())
+
+if __name__ == '__main__':
+    asyncio.run(main())
