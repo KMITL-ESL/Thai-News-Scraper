@@ -22,8 +22,9 @@ async def scrap(agency, link):
     except IntegrityError:
         db.rollback()
         logging.info(f'Duplicated {raw_news_entity.link}')
-    except:
+    except Exception as err :
         logging.error(f'failed to store raw_news_entity')
+        logging.error(err)
         
 async def main():
     index_url = 'https://www.dailynews.co.th/economic'

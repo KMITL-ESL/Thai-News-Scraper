@@ -41,8 +41,7 @@ class DailynewsAgency(Agency):
         content = soup.find('div', attrs={'class': 'content-all'}).text.strip()
         tags = soup.find('ol', attrs={'class': 'breadcrumb'}).find_all('li')
         category = tags[-1].text.strip()
-        return RawNewsEntity(id=str(uuid.uuid4()),
-                             publish_date=date,
+        return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
