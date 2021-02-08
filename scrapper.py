@@ -4,12 +4,13 @@ from datetime import datetime, timedelta
 
 from sqlalchemy.exc import IntegrityError
 
-from agency import DailynewsAgency
+from agency import DailynewsAgency, ManagerAgency
 from model import RawNewsEntity
 from database import db
 from config import config
 
 dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
+manager_agency = ManagerAgency(config=config['agency']['manageronline'])
 
 logging.basicConfig(level=logging.INFO)
 
@@ -37,7 +38,13 @@ async def scrap_dailynews():
 
 
 async def main():
-    await scrap_dailynews()
+    # await scrap_dailynews()
+    # print(await manager_agency.scrap_links('https://mgronline.com/motoring'))
+
+    entities = await manager_agency.scrap()
+
+    print(entities)
+    # print(await manager_agency.call('https://mgronline.com/motoring/detail/9610000104126'))
 
 
 if __name__ == '__main__':

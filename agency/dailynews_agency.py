@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from typing import List
 from urllib.parse import urlparse
 
-import requests
 from bs4 import BeautifulSoup
 from config import config
 from model import RawNewsEntity
@@ -16,7 +15,7 @@ from agency import Agency
 
 class DailynewsAgency(Agency):
     def __init__(self, config):
-        self.config = config
+        super().__init__(config)
 
     def parse_date(self, date_text) -> datetime:
 

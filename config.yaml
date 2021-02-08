@@ -14,7 +14,23 @@ agency:
         minute: 0
       - hour: 12
         minute: 0
+      - second: 15
     since_datedelta: 1
     max_news_per_batch: 1000
     indexes:
       - https://www.dailynews.co.th/economic
+      - https://www.dailynews.co.th/it
+      - https://www.dailynews.co.th/agriculture
+  manageronline:
+    scheduler:
+      - hour: 0
+        minute: 0
+      - hour: 12
+        minute: 0
+      - second: 15
+    since_datedelta: 1
+    max_news_per_batch: 1000
+    max_concurrent: 16
+    indexes:
+      - https://mgronline.com/motoring
+    
