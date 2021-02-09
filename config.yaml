@@ -18,3 +18,6 @@ agency:
     max_news_per_batch: 1000
     indexes:
       - https://www.dailynews.co.th/economic
+outbound:
+  post_news: http://localhost:8000/api/news
+  drop_news: http://localhost:8000/api/news
