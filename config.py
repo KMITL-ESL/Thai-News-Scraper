@@ -2,9 +2,6 @@ import os
 import yaml
 from collections import namedtuple
 
-
-
-
 def load_config(profile):
     if profile == 'DEPLOY':
         config_path = 'config-deploy.yaml'

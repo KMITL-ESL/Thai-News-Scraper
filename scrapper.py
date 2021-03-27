@@ -8,6 +8,7 @@ from agency import DailynewsAgency
 from model import RawNewsEntity
 from database import db
 from config import config
+import adapter
 
 dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
 
@@ -32,10 +33,12 @@ def insert_raw_news(raw_news_entity: RawNewsEntity):
 
 
 async def scrap_dailynews():
+    # await adapter.publish_drop_table()
     raw_news_entities = await dailynews_agency.scrap()
     for entity in raw_news_entities:
         insert_raw_news(entity)
-
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
 
 async def main():
     await scrap_dailynews()
