@@ -104,4 +104,5 @@ class DailynewsAgency(Agency):
             links.update(_links)
 
         logging.info(f'number of link = {len(links)}')
-        return await asyncio.gather(*[self.call(link) for link in links])
+        entities = await asyncio.gather(*[self.call(link) for link in links])
+        return list(filter(lambda entity: entity is not None, entities))

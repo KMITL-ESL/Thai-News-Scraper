@@ -26,6 +26,7 @@ def insert_raw_news(raw_news_entity: RawNewsEntity):
         db.rollback()
         logging.info(f'Duplicated {raw_news_entity.link}')
     except Exception as err :
+        db.rollback()
         logging.error(f'failed to store raw_news_entity')
         logging.error(err)
 

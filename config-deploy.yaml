@@ -1,0 +1,24 @@
+db:
+  username: postgres
+  password: esl2
+  host: news-db
+  port: 5432
+  database: postgres
+  echo: False
+logger:
+  level: INFO
+agency:
+  dailynews:
+    scheduler:
+      - hour: 0
+        minute: 0
+      - hour: 12
+        minute: 0
+      - second: 15
+    since_datedelta: 1
+    max_news_per_batch: 1000
+    indexes:
+      - https://www.dailynews.co.th/economic
+outbound:
+  post_news: http://news-classification:80/api/news
+  drop_news: http://news-classification:80/api/news
