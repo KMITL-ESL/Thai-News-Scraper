@@ -12,6 +12,7 @@ async def publish_raw_news(entity: RawNewsEntity):
     url = outbound_config['post_news']
     async with aiohttp.ClientSession() as session:
         request_body = {
+            'raw_news_id': entity.id,
             'title': entity.title,
             'content': entity.content,
             'publish_date': entity.publish_date,
