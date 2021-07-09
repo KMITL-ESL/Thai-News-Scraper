@@ -4,13 +4,14 @@ from datetime import datetime, timedelta
 
 from sqlalchemy.exc import IntegrityError
 
-from agency import DailynewsAgency
+from agency import DailynewsAgency, MgronlineAgency
 from model import RawNewsEntity
 from database import db
 from config import config
 import adapter
 
 dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
+dailynews_agency = DailynewsAgency(config=config['agency']['mgronline'])
 
 logging.basicConfig(level=logging.INFO)
 
@@ -40,8 +41,17 @@ async def scrap_dailynews():
         post_news_response = await adapter.publish_raw_news(entity)
         logging.info(post_news_response)
 
+async def scrap_mgronline():
+    # await adapter.publish_drop_table()
+    raw_news_entities = await dailynews_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
+
 async def main():
     await scrap_dailynews()
+    await scrap_mgronline()
 
 
 if __name__ == '__main__':

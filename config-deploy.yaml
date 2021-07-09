@@ -14,10 +14,18 @@ agency:
         minute: 0
       - hour: 12
         minute: 0
+  mgronline:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 16
+        minute: 50
     since_datedelta: 1
     max_news_per_batch: 1000
-    indexes:
+    indexes_dailynews:
       - https://www.dailynews.co.th/economic
+    indexes_mgronline:
+      - https://mgronline.com/uptodate
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news

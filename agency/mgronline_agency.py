@@ -14,7 +14,7 @@ from util import constants
 from agency import Agency
 
 
-class DailynewsAgency(Agency):
+class MgronlineAgency(Agency):
     def __init__(self, config):
         self.config = config
 
@@ -87,12 +87,12 @@ class DailynewsAgency(Agency):
                              title=title,
                              content=content,
                              created_at=datetime.now(),
-                             source='DAILYNEWS',
+                             source='MANAGERONLINE',
                              link=url
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:
-        index_urls = self.config['indexes_dailynews']
+        index_urls = self.config['indexes_mgronline']
         links = set()
         for index_url in index_urls:
             _links = await self.scrap_links(index_url,
