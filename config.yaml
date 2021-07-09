@@ -14,8 +14,8 @@ agency:
         minute: 0
       - hour: 12
         minute: 0
-      - hour: 18
-        minute: 20
+      - hour: 20
+        minute: 10
     since_datedelta: 1
     max_news_per_batch: 1000
     indexes:
