@@ -18,8 +18,8 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 16
-        minute: 55
+      - hour: 17
+        minute: 10
     since_datedelta: 1
     max_news_per_batch: 1000
     indexes_dailynews:
