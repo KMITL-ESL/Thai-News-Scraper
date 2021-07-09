@@ -6,9 +6,6 @@ db:
   database: postgres
   echo: False
 logger:
-<<<<<<< Updated upstream
-  level: INFO
-=======
   level: INFO
 agency:
   dailynews:
@@ -34,4 +31,3 @@ agency:
 outbound:
   post_news: http://localhost:8080/api/news
   drop_news: http://localhost:8080/api/news
->>>>>>> Stashed changes
