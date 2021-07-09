@@ -14,9 +14,7 @@ agency:
         minute: 0
       - hour: 12
         minute: 0
-      - hour: 20
-        minute: 10
-    since_datedelta: 1
+    since_datedelta: 14
     max_news_per_batch: 1000
     indexes:
       - "https://www.dailynews.co.th/news/news_group/%e0%b9%80%e0%b8%a8%e0%b8%a3%e0%b8%a9%e0%b8%90%e0%b8%81%e0%b8%b4%e0%b8%88-%e0%b8%a2%e0%b8%b2%e0%b8%99%e0%b8%a2%e0%b8%99%e0%b8%95%e0%b9%8c/"
@@ -26,8 +24,6 @@ agency:
         minute: 0
       - hour: 12
         minute: 0
-      - hour: 18
-        minute: 20
     since_datedelta: 14
     max_news_per_batch: 1000
     indexes:
