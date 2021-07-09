@@ -19,7 +19,7 @@ agency:
       - hour: 1
         minute: 0
       - hour: 16
-        minute: 50
+        minute: 55
     since_datedelta: 1
     max_news_per_batch: 1000
     indexes_dailynews:
