@@ -11,7 +11,7 @@ from config import config
 import adapter
 
 dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
-dailynews_agency = DailynewsAgency(config=config['agency']['mgronline'])
+mgronline_agency = MgronlineAgency(config=config['agency']['mgronline'])
 
 logging.basicConfig(level=logging.INFO)
 
@@ -43,7 +43,7 @@ async def scrap_dailynews():
 
 async def scrap_mgronline():
     # await adapter.publish_drop_table()
-    raw_news_entities = await dailynews_agency.scrap()
+    raw_news_entities = await mgronline_agency.scrap()
     for entity in raw_news_entities:
         insert_raw_news(entity)
         post_news_response = await adapter.publish_raw_news(entity)
