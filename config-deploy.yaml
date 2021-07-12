@@ -13,8 +13,8 @@ agency:
       - hour: 0
         minute: 0
       - hour: 3
-        minute: 50
-    since_datedelta: 1
+        minute: 55
+    since_datedelta: 4
     max_news_per_batch: 1000
     indexes_dailynews:
     - https://www.dailynews.co.th/news/news_group/การเมือง/
