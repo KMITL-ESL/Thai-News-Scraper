@@ -50,7 +50,4 @@ async def main():
     await scrap_dailynews()
     await scrap_manageronline()
 
-    logging.info(f'number of link = {len(links)}')
-    await asyncio.gather(*[scrap(agency, link) for link in links])
-
 asyncio.run(main())

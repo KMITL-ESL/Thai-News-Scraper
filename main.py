@@ -16,10 +16,10 @@ for trigger_config in trigger_configs:
                       trigger=CronTrigger(**trigger_config))
 
 # manageronline
-trigger_configs = config['agency']['manageronline']['scheduler']
-for trigger_config in trigger_configs:
-    scheduler.add_job(scrap_manageronline,
-                      trigger=CronTrigger(**trigger_config))
+#trigger_configs = config['agency']['manageronline']['scheduler']
+#for trigger_config in trigger_configs:
+#    scheduler.add_job(scrap_manageronline,
+ #                     trigger=CronTrigger(**trigger_config))
 
 scheduler.start()
 asyncio.get_event_loop().run_forever()

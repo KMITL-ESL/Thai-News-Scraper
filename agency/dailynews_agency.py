@@ -1,4 +1,5 @@
 import asyncio
+from asyncio.windows_events import NULL
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -53,7 +54,7 @@ class DailynewsAgency(Agency):
                              content=content,
                              created_at=datetime.now(),
                              source='DAILYNEWS',
-                             link=url
+                             link=url, 
                              )
 
     async def scrap_links(self, index_url, from_date, to_date, max_news):
@@ -67,6 +68,9 @@ class DailynewsAgency(Agency):
 
             soup = await self.scrap_html(index_url + page + str(page_number))
             logging.info(f'page {page_number}')
+            if soup is None:
+                logging.error(f'failed to obtain {index_url + page + str(page_number)}')
+                return
             div = soup.find('div', attrs={'class': 'elementor-element elementor-element-3c67710c elementor-grid-1 elementor-posts--thumbnail-left elementor-grid-tablet-1 archive-more-post elementor-grid-mobile-1 elementor-widget elementor-widget-posts'})
             
             articles = div.find_all('a', attrs={'class': 'elementor-post__thumbnail__link'}, href=True)
@@ -85,6 +89,8 @@ class DailynewsAgency(Agency):
 
             min_date = min(dates)
             max_date = max(dates)
+
+            logging.info(from_date)
 
             for date, link in zip(dates, links):
                 all_links.add(link)

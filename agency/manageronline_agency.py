@@ -33,6 +33,7 @@ class ManagerOnlineAgency(Agency):
         return date
 
     async def call(self, url, category) -> RawNewsEntity:
+        logging.info("url")
         soup = await self.scrap_html(url)
 
         logging.info(url)
@@ -52,10 +53,9 @@ class ManagerOnlineAgency(Agency):
                              publish_date=date,
                              title=title,
                              content=content,
-                             news_tags=tags,
                              created_at=datetime.now(),
                              source='MANAGERONLINE',
-                             link=url
+                             link=url,
                              )
 
     async def scrap_links(self, index_url, from_date, to_date, max_news):        
@@ -85,20 +85,21 @@ class ManagerOnlineAgency(Agency):
                 sublinks = sublinks[:-1]
                 sublinks = list(map(lambda link: f'{link["href"]}', sublinks))
                 topic_links.extend(sublinks)
+        logging.info(all_topic_links)
         
         for topic_url in all_topic_links :         
             num_link_before = len(all_links)
             while len(all_links) < max_news:  
                 topic_url = urljoin(topic_url,'start='+str(page_number))
                 soup = await self.scrap_html(topic_url)                
-                articles = soup.find_all('h1', attrs={'class': 'post_title'})            
+                articles = soup.find_all('a', attrs={'class': 'link'}, href=True)
                 if not articles:
                     break
 
                 date_raw = soup.find_all('time', attrs={'class': 'p-date-time-item'})
                 date_texts = list(map(lambda date_text: date_text['data-pdatatimedata'], date_raw))
 
-                dates = list(map(lambda date_text: self.parse_date(date_text), date_texts))
+                dates = list(map(lambda date_text: self.parse_date_index(date_text), date_texts))
 
                 min_date = min(dates)
                 max_date = max(dates)
@@ -118,6 +119,7 @@ class ManagerOnlineAgency(Agency):
                     break
             
             page_number = 0
+        logging.info(all_links)
         
         return all_links
 
