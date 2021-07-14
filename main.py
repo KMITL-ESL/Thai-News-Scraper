@@ -10,10 +10,10 @@ from scrapper import scrap_dailynews, scrap_mgronline
 scheduler = AsyncIOScheduler()
 
 # dailynews
-# trigger_configs = config['agency']['dailynews']['scheduler']
-# for trigger_config in trigger_configs:
-#     scheduler.add_job(scrap_dailynews,
-#                       trigger=CronTrigger(**trigger_config))
+trigger_configs = config['agency']['dailynews']['scheduler']
+for trigger_config in trigger_configs:
+    scheduler.add_job(scrap_dailynews,
+                      trigger=CronTrigger(**trigger_config))
 # manager
 trigger_configs = config['agency']['mgronline']['scheduler']
 for trigger_config in trigger_configs:
