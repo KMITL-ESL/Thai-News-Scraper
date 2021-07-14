@@ -50,7 +50,7 @@ async def scrap_mgronline():
         logging.info(post_news_response)
 
 async def main():
-    await scrap_dailynews()
+    # await scrap_dailynews()
     await scrap_mgronline()
 
 

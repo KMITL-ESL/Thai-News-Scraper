@@ -23,7 +23,6 @@ class DailynewsAgency(Agency):
     def parse_date(self, date_text) -> datetime:
 
         # Trim date name and น.
-        #logging.info(date_text)
         date_text = ' '.join(date_text.strip().split(' ')[:-1])
         date_text = date_text.replace('น.', '')  # remove เวลา
         date_text = date_text.replace(':', '.')
@@ -37,8 +36,6 @@ class DailynewsAgency(Agency):
         return date
 
     async def scrap_links(self, index_url, from_date, to_date, max_news):
-        #root_url = urlparse(index_url).hostname
-        #topic = index_url.split('/')[-1]
 
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
@@ -89,14 +86,11 @@ class DailynewsAgency(Agency):
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-time'}).text.strip()
         date = self.parse_date(date_text)
-        #logging.info(date)
         content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
                   }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
-        print(content)
         tags = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a', 
                attrs={'class': 'elementor-post-info__terms-list-item'})
         category = tags[-1].text.strip()
-        print(category)
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,

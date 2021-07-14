@@ -56,14 +56,12 @@ class MgronlineAgency(Agency):
             # filter article only the article that contains date
             # articles = list(filter(lambda article: article.find(
             #     'span', attrs={'class': 'media-date'}) is not None, articles))
-            print(articles)
             date_texts = soup.find_all('time', attrs={'class':'p-date-time-item'})
             date_texts = list(map(lambda date_text: date_text['data-pdatatimedata'], date_texts))
             dates = list(
                 map(lambda date_text: self.parse_date_index(date_text), date_texts))
             min_date = min(dates)
             max_date = max(dates)
-            print(min_date < from_date)
             links = list(
                 map(lambda link: f'{link["href"]}', articles))
             for date, link in zip(dates, links):

@@ -12,8 +12,8 @@ agency:
     scheduler:
       - hour: 0
         minute: 0
-      - hour: 19
-        minute: 10
+      - hour: 12
+        minute: 35
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
@@ -22,8 +22,8 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 19
-        minute: 10
+      - hour: 12
+        minute: 35
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_mgronline:
