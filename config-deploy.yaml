@@ -12,9 +12,9 @@ agency:
     scheduler:
       - hour: 0
         minute: 0
-      - hour: 3
-        minute: 55
-    since_datedelta: 4
+      - hour: 19
+        minute: 10
+    since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
     - https://www.dailynews.co.th/news/news_group/การเมือง/
@@ -22,12 +22,12 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 17
-        minute: 30
-    since_datedelta: 1
+      - hour: 19
+        minute: 10
+    since_datedelta: 2
     max_news_per_batch: 1000
     indexes_mgronline:
-     - https://mgronline.com/uptodate
+     - https://mgronline.com/uptodate/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news

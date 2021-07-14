@@ -33,24 +33,24 @@ def insert_raw_news(raw_news_entity: RawNewsEntity):
         logging.error(err)
 
 
-async def scrap_dailynews():
-    # await adapter.publish_drop_table()
-    raw_news_entities = await dailynews_agency.scrap()
-    for entity in raw_news_entities:
-        insert_raw_news(entity)
-        post_news_response = await adapter.publish_raw_news(entity)
-        logging.info(post_news_response)
+# async def scrap_dailynews():
+#     # await adapter.publish_drop_table()
+#     raw_news_entities = await dailynews_agency.scrap()
+#     for entity in raw_news_entities:
+#         insert_raw_news(entity)
+#         post_news_response = await adapter.publish_raw_news(entity)
+#         logging.info(post_news_response)
 
 async def scrap_mgronline():
     # await adapter.publish_drop_table()
     raw_news_entities = await mgronline_agency.scrap()
-    for entity in raw_news_entities:
-        insert_raw_news(entity)
-        post_news_response = await adapter.publish_raw_news(entity)
-        logging.info(post_news_response)
+    # for entity in raw_news_entities:
+    #     insert_raw_news(entity)
+    #     post_news_response = await adapter.publish_raw_news(entity)
+    #     logging.info(post_news_response)
 
 async def main():
-    await scrap_dailynews()
+    # await scrap_dailynews()
     await scrap_mgronline()
 
 

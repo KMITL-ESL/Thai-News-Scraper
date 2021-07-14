@@ -5,6 +5,7 @@ import uuid
 from datetime import datetime, timedelta
 from typing import List
 from urllib.parse import urlparse
+import attr
 
 import requests
 from bs4 import BeautifulSoup
@@ -40,7 +41,7 @@ class DailynewsAgency(Agency):
         #topic = index_url.split('/')[-1]
 
         all_links = set()
-        for page_number in range(1, (max_news//constants.DAILYNEWS_MAX_NUM_PER_PAGE)+1):
+        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
 
             soup = await self.scrap_html(index_url+'page/'+str(page_number), params={'page': page_number})
             if soup is None:
@@ -88,12 +89,14 @@ class DailynewsAgency(Agency):
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-time'}).text.strip()
         date = self.parse_date(date_text)
-        logging.info(date)
-        content = soup.find('div', 
-                  attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'}).text.strip().replace('\n', '')
+        #logging.info(date)
+        content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
+                  }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
+        print(content)
         tags = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a', 
                attrs={'class': 'elementor-post-info__terms-list-item'})
         category = tags[-1].text.strip()
+        print(category)
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
