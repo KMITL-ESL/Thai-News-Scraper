@@ -59,9 +59,9 @@ async def scrap_matichon():
         logging.info(post_news_response)
 
 async def main():
-    await scrap_dailynews()
+    #await scrap_dailynews()
     await scrap_mgronline()
-    await scrap_matichon()
+    #await scrap_matichon()
 
 
 if __name__ == '__main__':

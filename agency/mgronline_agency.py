@@ -26,7 +26,7 @@ class MgronlineAgency(Agency):
         _, thai_month, thai_year, *_ = date_text.split(' ')
         date_text = date_text.replace(
             thai_month, constants.TH_FULL_MONTHS_MAPPER_MGR[thai_month])
-        #date_text = date_text.replace(thai_year, str(int(thai_year) - 543))
+        date_text = date_text.replace(thai_year, str(int(thai_year) - 543))
         date = datetime.strptime(date_text, r'%d %B %Y %H.%M')
         return date
 
@@ -38,7 +38,7 @@ class MgronlineAgency(Agency):
         date_text = date_text.replace(':', '.')
         date = datetime.strptime(date_text, r'%Y %m %d %H.%M.%S')
         return date
-
+        
     async def scrap_links(self, index_url, from_date, to_date, max_news):
         #root_url = urlparse(index_url).hostname
         #topic = index_url.split('/')[-1]
