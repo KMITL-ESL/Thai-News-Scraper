@@ -10,10 +10,10 @@ logger:
 agency:
   dailynews:
     scheduler:
-      - hour: 0
+      - hour: 1
         minute: 0
-      - hour: 12
-        minute: 35
+      - hour: 15
+        minute: 10
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
@@ -22,12 +22,22 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 12
-        minute: 35
+      - hour: 15
+        minute: 10
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_mgronline:
-     - https://mgronline.com/uptodate/
+     - https://www.mgronline.com/uptodate/
+  matichon:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 15
+        minute: 10
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_matichon:
+     - https://www.matichon.co.th/politics/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news
