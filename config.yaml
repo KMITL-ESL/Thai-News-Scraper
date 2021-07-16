@@ -31,7 +31,7 @@ agency:
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_mgronline:
-     - https://www.mgronline.com/uptodate/
+     - https://mgronline.com/uptodate/
   matichon:
     scheduler:
       - hour: 1
