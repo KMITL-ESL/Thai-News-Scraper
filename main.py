@@ -5,7 +5,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 from config import config
-from scrapper import scrap_dailynews, scrap_mgronline, scrap_matichon
+from scrapper import scrap_dailynews, scrap_mgronline, scrap_matichon, scrap_bkkbiznews
 
 scheduler = AsyncIOScheduler()
 
@@ -23,6 +23,11 @@ for trigger_config in trigger_configs:
 trigger_configs = config['agency']['matichon']['scheduler']
 for trigger_config in trigger_configs:
     scheduler.add_job(scrap_matichon,
+                      trigger=CronTrigger(**trigger_config))
+
+trigger_configs = config['agency']['bkkbiznews']['scheduler']
+for trigger_config in trigger_configs:
+    scheduler.add_job(scrap_bkkbiznews,
                       trigger=CronTrigger(**trigger_config))
 
 scheduler.start()

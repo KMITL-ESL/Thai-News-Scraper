@@ -12,10 +12,10 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
+      - hour: 13
+        minute: 35
       - hour: 17
         minute: 15
-      - hour: 6
-        minute: 30
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
@@ -24,10 +24,10 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
+      - hour: 13
+        minute: 35
       - hour: 17
         minute: 15
-      - hour: 6
-        minute: 30
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_mgronline:
@@ -36,14 +36,26 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
+      - hour: 13
+        minute: 35
       - hour: 17
         minute: 15
-      - hour: 6
-        minute: 30
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_matichon:
      - https://www.matichon.co.th/politics/
+  bkkbiznews:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 13
+        minute: 35
+      - hour: 17
+        minute: 15
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_bkkbiznews:
+     - https://www.bangkokbiznews.com/politics/list/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news

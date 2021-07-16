@@ -16,24 +16,21 @@ from util import constants
 from agency import Agency
 
 
-class MatichonAgency(Agency):
+class BkkbiznewsAgency(Agency):
     def __init__(self, config):
         self.config = config
 
     def parse_date(self, date_text) -> datetime:
-
-        # Trim date name and น.
-        date_text = ' '.join(date_text.strip().split(' ')[1:-1])
-        date_text = date_text.replace('วันที่', '')
-        date_text = date_text.replace('น.', '')  # remove เวลา
-        date_text = date_text.replace(':', '.')
-        date_text = date_text.replace('-', '')
-        date_text = date_text.replace('  ', ' ')
+        
+        date_text = (date_text.split(' '))[0:3]
+        date_text = ' '.join(date_text)
+        date_text = date_text.replace('\n', '')
+        date_text = date_text.replace('|', '')
         _, thai_month, thai_year, *_ = date_text.split(' ')
         date_text = date_text.replace(
             thai_month, constants.TH_FULL_MONTHS_MAPPER[thai_month])
         date_text = date_text.replace(thai_year, str(int(thai_year) - 543))
-        date = datetime.strptime(date_text, r'%d %B %Y %H.%M')
+        date = datetime.strptime(date_text, r'%d %B %Y')
         return date
 
     async def scrap_links(self, index_url, from_date, to_date, max_news):
@@ -41,18 +38,17 @@ class MatichonAgency(Agency):
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
 
-            soup = await self.scrap_html(index_url+'page/'+str(page_number) , params={'page': page_number})
+            soup = await self.scrap_html(index_url+str(page_number) , params={'page': page_number})
             if soup is None:
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
             logging.info(f'page {page_number}')
-            articles = soup.find('div', attrs={'class', 'td-ss-main-content'})
-            date_texts = (articles.find_all('span', attrs={'class': 'td-post-date'}))
-            date_texts = list(map(lambda date_text: date_text.find('time',attrs={'class': 
-            'entry-date updated td-module-date'}).text, date_texts))
-            articles = soup.find_all('a',attrs={'class':'ud-module-link'}, href=True)
-            # *filter article only the article that contains date*
+            articles = soup.find('div', attrs={'class':'read_post_list'})
+            date_texts = soup.find_all('div', attrs={'class': 'event_date'})
+            date_texts = list(map(lambda date_text: date_text.text, date_texts))
+            articles = soup.find_all('h3', attrs={'class':'post_title'})
+            articles = list(map(lambda link: link.find('a',  href=True), articles))
             dates = list(
                 map(lambda date_text: self.parse_date(date_text), date_texts))
             
@@ -78,22 +74,22 @@ class MatichonAgency(Agency):
 
         logging.info(f'scrap {url}')
 
-        title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
-        date_text = soup.find('span', 
-                    attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()
+        soup_news = soup.find('div', attrs={'class': 'col-lg-8 col-md-8 col-sm-12'})
+        title = soup.find('h1', attrs={'class': 'section_title section_title_medium_var2'}).text.strip()
+        date_text = soup_news.find('div', attrs={'class': 'event_date'}).text.strip()
         date = self.parse_date(date_text)
-        content = soup.find('div', attrs={'class': 'td-post-content'}).text.strip()
-
+        content = ' '.join(' '.join(list(map(lambda text: text.get_text(), soup_news.find_all('p')))).split())
+        
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
-                             source='MATICHON',
+                             source='BKKBIZNEWS',
                              link=url
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:
-        index_urls = self.config['indexes_matichon']
+        index_urls = self.config['indexes_bkkbiznews']
         links = set()
         for index_url in index_urls:
             _links = await self.scrap_links(index_url,
