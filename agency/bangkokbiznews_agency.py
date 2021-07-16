@@ -79,12 +79,13 @@ class BkkbiznewsAgency(Agency):
         date_text = soup_news.find('div', attrs={'class': 'event_date'}).text.strip()
         date = self.parse_date(date_text)
         content = ' '.join(' '.join(list(map(lambda text: text.get_text(), soup_news.find_all('p')))).split())
+        content = content.replace('ๅ','')
         
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
-                             source='BKKBIZNEWS',
+                             source='BANGKOKBIZNEWS',
                              link=url
                              )
 
