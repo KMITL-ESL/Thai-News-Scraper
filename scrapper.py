@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 from sqlalchemy.exc import IntegrityError
 
-from agency import DailynewsAgency, ManagerOnlineAgency
+from agency import DailynewsAgency, ManagerOnlineAgency, BangkokbiznewsAgency
 from model import RawNewsEntity
 from database import db
 from config import config
@@ -12,6 +12,7 @@ import adapter
 
 dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
 manageronline_agency = ManagerOnlineAgency(config=config['agency']['manageronline'])
+bangkokbiznews_agency = BangkokbiznewsAgency(config=config['agency']['bangkokbiznews'])
 
 logging.basicConfig(level=logging.INFO)
 
@@ -46,8 +47,17 @@ async def scrap_manageronline():
         post_news_response = await adapter.publish_raw_news(entity)
         logging.info(post_news_response)
 
+async def scrap_bangkokbiznews():
+    # await adapter.publish_drop_table()
+    raw_news_entities = await bangkokbiznews_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
+
 async def main():
-    await scrap_dailynews()
-    await scrap_manageronline()
+    #await scrap_dailynews()
+    #await scrap_manageronline()
+    await scrap_bangkokbiznews()
 
 asyncio.run(main())

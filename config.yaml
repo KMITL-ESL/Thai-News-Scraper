@@ -28,6 +28,16 @@ agency:
     max_news_per_batch: 1000
     indexes:
       - https://mgronline.com/sport
+  bangkokbiznews:
+    scheduler:
+      - hour: 0
+        minute: 0
+      - hour: 12
+        minute: 0
+    since_datedelta: 1
+    max_news_per_batch: 1000
+    indexes:
+      - https://www.bangkokbiznews.com/politics/list/
 outbound:
   post_news: http://localhost:8080/api/news
   drop_news: http://localhost:8080/api/news

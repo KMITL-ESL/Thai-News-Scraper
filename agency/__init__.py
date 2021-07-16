@@ -1,3 +1,4 @@
 from agency.base_agency import Agency
 from agency.dailynews_agency import DailynewsAgency
 from agency.manageronline_agency import ManagerOnlineAgency
+from agency.bangkokbiznews_agency import BangkokbiznewsAgency
