@@ -12,9 +12,9 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 13
-        minute: 35
-      - hour: 17
+      - hour: 6
+        minute: 15
+      - hour: 15
         minute: 15
     since_datedelta: 2
     max_news_per_batch: 1000
@@ -24,9 +24,9 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 13
-        minute: 35
-      - hour: 17
+      - hour: 6
+        minute: 15
+      - hour: 15
         minute: 15
     since_datedelta: 2
     max_news_per_batch: 1000
@@ -36,9 +36,9 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 13
-        minute: 35
-      - hour: 17
+      - hour: 6
+        minute: 15
+      - hour: 15
         minute: 15
     since_datedelta: 2
     max_news_per_batch: 1000
@@ -48,9 +48,9 @@ agency:
     scheduler:
       - hour: 1
         minute: 0
-      - hour: 13
-        minute: 35
-      - hour: 17
+      - hour: 6
+        minute: 15
+      - hour: 15
         minute: 15
     since_datedelta: 2
     max_news_per_batch: 1000
