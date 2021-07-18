@@ -7,7 +7,7 @@ Base = declarative_base()
 class RawNewsEntity(Base):
     __tablename__ = 'raw_news'
 
-    id = Column(String, nullable=True, primary_key=True)
+    id = Column(Integer, nullable=True, primary_key=True, autoincrement=True)
     publish_date = Column(DateTime)
     title = Column(String)
     content = Column(String)

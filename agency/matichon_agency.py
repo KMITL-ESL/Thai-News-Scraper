@@ -16,18 +16,19 @@ from util import constants
 from agency import Agency
 
 
-class DailynewsAgency(Agency):
+class MatichonAgency(Agency):
     def __init__(self, config):
         self.config = config
 
     def parse_date(self, date_text) -> datetime:
 
         # Trim date name and น.
-        date_text = ' '.join(date_text.strip().split(' ')[:-1])
+        date_text = ' '.join(date_text.strip().split(' ')[1:-1])
+        date_text = date_text.replace('วันที่', '')
         date_text = date_text.replace('น.', '')  # remove เวลา
         date_text = date_text.replace(':', '.')
-        date_text = date_text.replace('\n', '')
-        date_text = date_text.replace('\t', '')
+        date_text = date_text.replace('-', '')
+        date_text = date_text.replace('  ', ' ')
         _, thai_month, thai_year, *_ = date_text.split(' ')
         date_text = date_text.replace(
             thai_month, constants.TH_FULL_MONTHS_MAPPER[thai_month])
@@ -40,22 +41,18 @@ class DailynewsAgency(Agency):
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
 
-            soup = await self.scrap_html(index_url+'page/'+str(page_number), params={'page': page_number})
+            soup = await self.scrap_html(index_url+'page/'+str(page_number) , params={'page': page_number})
             if soup is None:
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
-            
             logging.info(f'page {page_number}')
-            
-            articles = soup.find_all('a', attrs={'class': 'elementor-post__thumbnail__link'}, href=True)
+            articles = soup.find('div', attrs={'class', 'td-ss-main-content'})
+            date_texts = (articles.find_all('span', attrs={'class': 'td-post-date'}))
+            date_texts = list(map(lambda date_text: date_text.find('time',attrs={'class': 
+            'entry-date updated td-module-date'}).text, date_texts))
+            articles = soup.find_all('a',attrs={'class':'ud-module-link'}, href=True)
             # *filter article only the article that contains date*
-            #articles = list(filter(lambda article: article.find(
-                #'span', attrs={'class': 'elementor-post__thumbnail__link'}) is not None, articles))
-            date_texts = soup.find_all('div', attrs={'class': 'elementor-post__meta-data'})
-            date_texts = list(map(lambda date_text: date_text.find(
-                'span', attrs={'class': 'elementor-post-date'}).text+' '+
-                date_text.find('span', attrs={'class': 'elementor-post-time'}).text, date_texts))
             dates = list(
                 map(lambda date_text: self.parse_date(date_text), date_texts))
             
@@ -64,7 +61,7 @@ class DailynewsAgency(Agency):
 
             links = list(
                 map(lambda link: f'{link["href"]}', articles))
-            logging.info(articles)
+
             for date, link in zip(dates, links):
                 all_links.add(link)
                 logging.info(link)
@@ -81,26 +78,22 @@ class DailynewsAgency(Agency):
 
         logging.info(f'scrap {url}')
 
-        title = soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()
+        title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
         date_text = soup.find('span', 
-                    attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
-                    attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-time'}).text.strip()
+                    attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()
         date = self.parse_date(date_text)
-        content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
-                  }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
-        tags = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a', 
-               attrs={'class': 'elementor-post-info__terms-list-item'})
-        category = tags[-1].text.strip()
+        content = soup.find('div', attrs={'class': 'td-post-content'}).text.strip()
+
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
-                             source='DAILYNEWS',
+                             source='MATICHON',
                              link=url
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:
-        index_urls = self.config['indexes_dailynews']
+        index_urls = self.config['indexes_matichon']
         links = set()
         for index_url in index_urls:
             _links = await self.scrap_links(index_url,

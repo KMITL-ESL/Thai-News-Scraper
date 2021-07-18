@@ -4,13 +4,24 @@ from datetime import datetime, timedelta
 
 from sqlalchemy.exc import IntegrityError
 
-from agency import DailynewsAgency
+from agency import DailynewsAgency, MgronlineAgency, MatichonAgency, BkkbiznewsAgency
+from model import RawNewsEntity
 from database import db
+from config import config
+import adapter
+
+dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
+mgronline_agency = MgronlineAgency(config=config['agency']['mgronline'])
+matichon_agency = MatichonAgency(config=config['agency']['matichon'])
+bkkbiznews_agency = BkkbiznewsAgency(config=config['agency']['bkkbiznews'])
 
 logging.basicConfig(level=logging.INFO)
 
-async def scrap(agency, link):
-    raw_news_entity = await agency.call(link)
+
+def insert_raw_news(raw_news_entity: RawNewsEntity):
+    if raw_news_entity is None:
+        logging.error(f'failed to create raw_news_entity')
+        return
     logging.info(raw_news_entity)
     try:
         db.add(raw_news_entity)
@@ -18,15 +29,50 @@ async def scrap(agency, link):
     except IntegrityError:
         db.rollback()
         logging.info(f'Duplicated {raw_news_entity.link}')
+    except Exception as err :
+        db.rollback()
+        logging.error(f'failed to store raw_news_entity')
+        logging.error(err)
+
+
+async def scrap_dailynews():
+    # await adapter.publish_drop_table()
+    raw_news_entities = await dailynews_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
+
+async def scrap_mgronline():
+    # await adapter.publish_drop_table()
+    raw_news_entities = await mgronline_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
+
+async def scrap_matichon():
+    # await adapter.publish_drop_table()
+    raw_news_entities = await matichon_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
+
+async def scrap_bkkbiznews():
+    # await adapter.publish_drop_table()
+    raw_news_entities = await bkkbiznews_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
+
 async def main():
-    index_url = 'https://www.dailynews.co.th/economic'
-    agency = DailynewsAgency()
-    links = await agency.scrap_links(index_url,
-                                     from_date=datetime.now() - timedelta(days=1),
-                                     to_date=datetime.now(),
-                                     max_news=1000)
+    await scrap_dailynews()
+    await scrap_mgronline()
+    await scrap_matichon()
+    await scrap_bkkbiznews()
 
-    logging.info(f'number of link = {len(links)}')
-    await asyncio.gather(*[scrap(agency, link) for link in links])
 
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())

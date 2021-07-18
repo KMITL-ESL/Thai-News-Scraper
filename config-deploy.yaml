@@ -1,0 +1,61 @@
+db:
+  username: postgres
+  password: esl2
+  host: news-db
+  port: 5432
+  database: postgres
+  echo: False
+logger:
+  level: INFO
+agency:
+  dailynews:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 6
+        minute: 15
+      - hour: 15
+        minute: 15
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_dailynews:
+    - https://www.dailynews.co.th/news/news_group/การเมือง/
+  mgronline:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 6
+        minute: 15
+      - hour: 15
+        minute: 15
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_mgronline:
+     - https://mgronline.com/uptodate/
+  matichon:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 6
+        minute: 15
+      - hour: 15
+        minute: 15
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_matichon:
+     - https://www.matichon.co.th/politics/
+  bkkbiznews:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 6
+        minute: 15
+      - hour: 15
+        minute: 15
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_bkkbiznews:
+     - https://www.bangkokbiznews.com/politics/list/
+outbound:
+  post_news: http://news-classification:80/api/news
+  drop_news: http://news-classification:80/api/news
