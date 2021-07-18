@@ -20,6 +20,8 @@ agency:
     max_news_per_batch: 1000
     indexes_dailynews:
     - https://www.dailynews.co.th/news/news_group/การเมือง/
+    - https://www.dailynews.co.th/news/news_group/เศรษฐกิจ-ยานยนต์/
+    - https://www.dailynews.co.th/news/news_group/ต่างประเทศ/
   mgronline:
     scheduler:
       - hour: 1
@@ -32,6 +34,10 @@ agency:
     max_news_per_batch: 1000
     indexes_mgronline:
      - https://mgronline.com/uptodate/
+     - https://mgronline.com/stockmarket/4920/ #หุ้น-Cryptocurrency
+     - https://mgronline.com/stockmarket/4461/4454/ #หุ้น-ข่าวการเงิน-การคลัง-ข่าว
+     - https://mgronline.com/science/5516/5528/ #วิทยาศาสตร์-นวตกรรม-สิ่งประดิษฐ์โทคโนฯ
+     - https://mgronline.com/science/5504/5530/ #วิทยาศาสตร์-อวกาศ-เทคโนโลยีอวกาศ
   matichon:
     scheduler:
       - hour: 1
@@ -44,6 +50,8 @@ agency:
     max_news_per_batch: 1000
     indexes_matichon:
      - https://www.matichon.co.th/politics/
+     - https://www.matichon.co.th/lifestyle/tech/
+     - https://www.matichon.co.th/stock-finance/daily-stock-markets/
   bkkbiznews:
     scheduler:
       - hour: 1
@@ -56,6 +64,9 @@ agency:
     max_news_per_batch: 1000
     indexes_bkkbiznews:
      - https://www.bangkokbiznews.com/politics/list/
+     - https://www.bangkokbiznews.com/business/list/
+     - https://www.bangkokbiznews.com/eec/list/
+     - https://www.bangkokbiznews.com/auto/list/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news
