@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 from sqlalchemy.exc import IntegrityError
 
-from agency import DailynewsAgency, MgronlineAgency, MatichonAgency, BkkbiznewsAgency
+from agency import DailynewsAgency, MgronlineAgency, MatichonAgency, BkkbiznewsAgency, TheStandardAgency
 from model import RawNewsEntity
 from database import db
 from config import config
@@ -14,6 +14,7 @@ dailynews_agency = DailynewsAgency(config=config['agency']['dailynews'])
 mgronline_agency = MgronlineAgency(config=config['agency']['mgronline'])
 matichon_agency = MatichonAgency(config=config['agency']['matichon'])
 bkkbiznews_agency = BkkbiznewsAgency(config=config['agency']['bkkbiznews'])
+the_standard_agency = TheStandardAgency(config=config['agency']['the_standard'])
 
 logging.basicConfig(level=logging.INFO)
 
@@ -67,11 +68,20 @@ async def scrap_bkkbiznews():
         post_news_response = await adapter.publish_raw_news(entity)
         logging.info(post_news_response)
 
+async def scrap_the_standard():
+    # await adapter.publish_drop_table()
+    raw_news_entities = await the_standard_agency.scrap()
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
+
 async def main():
     await scrap_dailynews()
     await scrap_mgronline()
     await scrap_matichon()
     await scrap_bkkbiznews()
+    await scrap_the_standard()
 
 
 if __name__ == '__main__':

@@ -67,6 +67,19 @@ agency:
      - https://www.bangkokbiznews.com/business/list/
      - https://www.bangkokbiznews.com/eec/list/
      - https://www.bangkokbiznews.com/auto/list/
+  the_standard:
+    scheduler:
+      - hour: 1
+        minute: 0
+      - hour: 6
+        minute: 15
+      - hour: 15
+        minute: 15
+    since_datedelta: 4
+    max_news_per_batch: 1000
+    indexes_the_standard:
+     - https://thestandard.co/category/news/tech/
+     - https://thestandard.co/category/news/business/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news
