@@ -24,7 +24,7 @@ class TheStandardAgency(Agency):
 
         date_text = ' '.join(date_text.strip().split(' '))
         date_text = date_text.replace('\n', '')
-        print(date_text)
+        #print(date_text)
         _, thai_month, thai_year, *_ = date_text.split(' ')
         date_text = date_text.replace(
             thai_month, constants.TH_FULL_MONTHS_MAPPER[thai_month])
@@ -33,8 +33,7 @@ class TheStandardAgency(Agency):
 
     def parse_date(self, date_text) -> datetime:
 
-        date_text = ' '.join(date_text.strip().split(' '))#[:-1])
-        date_text = date_text.replace('.', ' ')  # remove เวลา
+        date_text = date_text.replace('.', ' ')
         date = datetime.strptime(date_text, r'%d %m %Y')
         return date
 
@@ -44,6 +43,7 @@ class TheStandardAgency(Agency):
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
 
             soup = await self.scrap_html(index_url+'page/'+str(page_number), params={'page': page_number})
+            print(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
@@ -54,7 +54,8 @@ class TheStandardAgency(Agency):
             articles = soup.find('div', attrs={'class': 'newsbox-archive'})
             date_texts = soup.find_all('div', attrs={'class': 'date'})
             date_texts = list(map(lambda date_text: date_text.text, date_texts))
-            articles = soup.find_all('h3', attrs={'class':'news-title'})
+            articles = articles.find_all('div', attrs={'class':'news-item'})
+            articles = list(map(lambda article: article.find('h3', attrs={'class':'news-title'}), articles))
             articles = list(map(lambda link: link.find('a',  href=True), articles))
             dates = list(map(lambda date_text: self.parse_date_index(date_text), date_texts))
 
@@ -63,13 +64,14 @@ class TheStandardAgency(Agency):
 
             links = list(
                 map(lambda link: f'{link["href"]}', articles))
-            logging.info(articles)
+
             for date, link in zip(dates, links):
-                all_links.add(link)
-                logging.info(link)
+                soup = await self.scrap_html(link)
+                if  soup.find('div', attrs={'class':'meta-date'}) is not None:
+                    all_links.add(link)
+                    logging.info(link)
             if min_date < from_date:
                 break
-
         return all_links
 
     async def call(self, url) -> RawNewsEntity:
@@ -81,7 +83,8 @@ class TheStandardAgency(Agency):
         logging.info(f'scrap {url}')
 
         title = soup.find('h1', attrs={'class': 'title'}).text.strip()
-        date_text = soup.find('div', attrs={'class': 'meta-date'}).find('span').text.strip()
+        date_text = soup.find('div', attrs={'class': 'meta-date'}).text.strip()
+        print(date_text)
         date = self.parse_date(date_text)
         content = soup.find('div', attrs={'class': 'col-sm-9 fix-sticky'
                   }).find('div', attrs={'class': 'entry-content'}).text.strip()
