@@ -22,9 +22,8 @@ class DailynewsAgency(Agency):
 
     def parse_date(self, date_text) -> datetime:
 
-        # Trim date name and น.
         date_text = ' '.join(date_text.strip().split(' ')[:-1])
-        date_text = date_text.replace('น.', '')  # remove เวลา
+        date_text = date_text.replace('น.', '')
         date_text = date_text.replace(':', '.')
         date_text = date_text.replace('\n', '')
         date_text = date_text.replace('\t', '')
@@ -49,9 +48,6 @@ class DailynewsAgency(Agency):
             logging.info(f'page {page_number}')
             
             articles = soup.find_all('a', attrs={'class': 'elementor-post__thumbnail__link'}, href=True)
-            # *filter article only the article that contains date*
-            #articles = list(filter(lambda article: article.find(
-                #'span', attrs={'class': 'elementor-post__thumbnail__link'}) is not None, articles))
             date_texts = soup.find_all('div', attrs={'class': 'elementor-post__meta-data'})
             date_texts = list(map(lambda date_text: date_text.find(
                 'span', attrs={'class': 'elementor-post-date'}).text+' '+

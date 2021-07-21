@@ -22,10 +22,9 @@ class MatichonAgency(Agency):
 
     def parse_date(self, date_text) -> datetime:
 
-        # Trim date name and น.
         date_text = ' '.join(date_text.strip().split(' ')[1:-1])
         date_text = date_text.replace('วันที่', '')
-        date_text = date_text.replace('น.', '')  # remove เวลา
+        date_text = date_text.replace('น.', '')
         date_text = date_text.replace(':', '.')
         date_text = date_text.replace('-', '')
         date_text = date_text.replace('  ', ' ')
@@ -52,7 +51,6 @@ class MatichonAgency(Agency):
             date_texts = list(map(lambda date_text: date_text.find('time',attrs={'class': 
             'entry-date updated td-module-date'}).text, date_texts))
             articles = soup.find_all('a',attrs={'class':'ud-module-link'}, href=True)
-            # *filter article only the article that contains date*
             dates = list(
                 map(lambda date_text: self.parse_date(date_text), date_texts))
             

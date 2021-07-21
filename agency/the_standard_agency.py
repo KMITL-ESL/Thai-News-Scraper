@@ -24,7 +24,6 @@ class TheStandardAgency(Agency):
 
         date_text = ' '.join(date_text.strip().split(' '))
         date_text = date_text.replace('\n', '')
-        #print(date_text)
         _, thai_month, thai_year, *_ = date_text.split(' ')
         date_text = date_text.replace(
             thai_month, constants.TH_FULL_MONTHS_MAPPER[thai_month])
@@ -43,7 +42,6 @@ class TheStandardAgency(Agency):
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
 
             soup = await self.scrap_html(index_url+'page/'+str(page_number), params={'page': page_number})
-            print(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
@@ -84,7 +82,6 @@ class TheStandardAgency(Agency):
 
         title = soup.find('h1', attrs={'class': 'title'}).text.strip()
         date_text = soup.find('div', attrs={'class': 'meta-date'}).text.strip()
-        print(date_text)
         date = self.parse_date(date_text)
         content = soup.find('div', attrs={'class': 'col-sm-9 fix-sticky'
                   }).find('div', attrs={'class': 'entry-content'}).text.strip()

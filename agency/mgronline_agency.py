@@ -20,7 +20,7 @@ class MgronlineAgency(Agency):
 
     def parse_date(self, date_text) -> datetime:
         date_text = ' '.join(date_text.strip().split(' '))
-        date_text = date_text.replace('/', ' ')  # remove เวลา
+        date_text = date_text.replace('/', ' ')
         date_text = date_text.replace(':', '.')
         date_text = date_text.replace('\t', '')
         _, thai_month, thai_year, *_ = date_text.split(' ')
@@ -32,16 +32,14 @@ class MgronlineAgency(Agency):
 
     def parse_date_index(self, date_text) -> datetime:
 
-        # Trim date name and น.
         date_text = ' '.join(date_text.strip().split(' '))
-        date_text = date_text.replace('/', ' ')  # remove เวลา
+        date_text = date_text.replace('/', ' ')
         date_text = date_text.replace(':', '.')
         date = datetime.strptime(date_text, r'%Y %m %d %H.%M.%S')
         return date
         
     async def scrap_links(self, index_url, from_date, to_date, max_news):
-        #root_url = urlparse(index_url).hostname
-        #topic = index_url.split('/')[-1]
+
         all_links = set()
         for page_number in range(0, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)):
 
@@ -53,9 +51,6 @@ class MgronlineAgency(Agency):
 
             logging.info(f'page {page_number}')
             articles = soup.find_all('a',attrs={'class':'link'}, href=True)
-            # filter article only the article that contains date
-            # articles = list(filter(lambda article: article.find(
-            #     'span', attrs={'class': 'media-date'}) is not None, articles))
             date_texts = soup.find_all('time', attrs={'class':'p-date-time-item'})
             date_texts = list(map(lambda date_text: date_text['data-pdatatimedata'], date_texts))
             dates = list(
