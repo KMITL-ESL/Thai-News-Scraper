@@ -19,9 +19,9 @@ agency:
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
-    - https://www.dailynews.co.th/news/news_group/การเมือง/
     - https://www.dailynews.co.th/news/news_group/เศรษฐกิจ-ยานยนต์/
     - https://www.dailynews.co.th/news/news_group/ต่างประเทศ/
+    - https://www.dailynews.co.th/news/news_group/การศึกษา-ไอที/
   mgronline:
     scheduler:
       - hour: 1
@@ -38,6 +38,10 @@ agency:
      - https://mgronline.com/stockmarket/4461/4454/ #หุ้น-ข่าวการเงิน-การคลัง-ข่าว
      - https://mgronline.com/science/5516/5528/ #วิทยาศาสตร์-นวตกรรม-สิ่งประดิษฐ์โทคโนฯ
      - https://mgronline.com/science/5504/5530/ #วิทยาศาสตร์-อวกาศ-เทคโนโลยีอวกาศ
+     - https://mgronline.com/business/4450/4401/ #เศรษฐกิจ-ธุรกิจ การค้า-อุตสาหกรรม-คมนาคม อุตสาหกรรม-พลังงาน
+     - https://mgronline.com/business/4450/4402/ #เศรษฐกิจ-ธุรกิจ การค้า-อุตสาหกรรม-คมนาคม คมนาคม-ขนส่ง
+     - https://mgronline.com/motoring/3201/ #Motoring ข่าวรถ
+     - https://mgronline.com/cyberbiz/3501/3502/ #Cyber BIZ ข่าวไอที อิเล็กทรอนิกส์
   matichon:
     scheduler:
       - hour: 1
@@ -49,9 +53,9 @@ agency:
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_matichon:
-     - https://www.matichon.co.th/politics/
      - https://www.matichon.co.th/lifestyle/tech/
      - https://www.matichon.co.th/stock-finance/daily-stock-markets/
+     - https://www.matichon.co.th/economy/auto
   bkkbiznews:
     scheduler:
       - hour: 1
@@ -63,10 +67,11 @@ agency:
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_bkkbiznews:
-     - https://www.bangkokbiznews.com/politics/list/
      - https://www.bangkokbiznews.com/business/list/
      - https://www.bangkokbiznews.com/eec/list/
      - https://www.bangkokbiznews.com/auto/list/
+     - https://www.bangkokbiznews.com/innovation/list/
+     - https://www.bangkokbiznews.com/it/list/
   the_standard:
     scheduler:
       - hour: 1
@@ -80,6 +85,7 @@ agency:
     indexes_the_standard:
      - https://thestandard.co/category/news/tech/
      - https://thestandard.co/category/news/business/
+     - https://thestandard.co/category/news/world/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news
