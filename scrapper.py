@@ -77,11 +77,11 @@ async def scrap_the_standard():
         logging.info(post_news_response)
 
 async def main():
-    # await scrap_dailynews()
-    # await scrap_mgronline()
+    await scrap_dailynews()
+    await scrap_mgronline()
     await scrap_matichon()
-    # await scrap_bkkbiznews()
-    # await scrap_the_standard()
+    await scrap_bkkbiznews()
+    await scrap_the_standard()
 
 
 if __name__ == '__main__':
