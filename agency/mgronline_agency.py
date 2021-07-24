@@ -42,7 +42,7 @@ class MgronlineAgency(Agency):
 
         all_links = set()
         for page_number in range(0, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)):
-
+        #for page_number in range(0, 39):
             soup = await self.scrap_html(index_url+'start='+str(page_number*10), params={'page': page_number})
             if soup is None:
                 logging.error(
@@ -60,8 +60,9 @@ class MgronlineAgency(Agency):
             links = list(
                 map(lambda link: f'{link["href"]}', articles))
             for date, link in zip(dates, links):
-                all_links.add(link)
-                logging.info(link)
+                if soup.find_all('time', attrs={'class':'p-date-time-item'}) is not None:
+                    all_links.add(link)
+                    logging.info(link)
             if min_date < from_date:
                 break
         return all_links
