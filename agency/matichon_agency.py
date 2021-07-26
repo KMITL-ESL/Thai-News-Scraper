@@ -46,6 +46,7 @@ class MatichonAgency(Agency):
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
             logging.info(f'page {page_number}')
+
             articles = soup.find('div', attrs={'class', 'td-ss-main-content'})
             date_texts = (articles.find_all('span', attrs={'class': 'td-post-date'}))
             date_texts = list(map(lambda date_text: date_text.find('time',attrs={'class': 

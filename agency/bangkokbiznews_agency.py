@@ -78,7 +78,12 @@ class BkkbiznewsAgency(Agency):
         title = soup.find('h1', attrs={'class': 'section_title section_title_medium_var2'}).text.strip()
         date_text = soup_news.find('div', attrs={'class': 'event_date'}).text.strip()
         date = self.parse_date(date_text)
-        content = ' '.join(' '.join(list(map(lambda text: text.get_text(), soup_news.find_all('p')))).split())
+        if soup_news.find_all('p') :
+            content = ' '.join(' '.join(list(map(lambda text: text.get_text(), soup_news.find_all('p')))).split())
+        else:
+            soup_news = soup_news.find('div', attrs={'class' : 'text-read'})
+            content = ' '.join(' '.join(list(map(lambda text: text.get_text(), soup_news.find_all('div',attrs={'class': ''})))).split())
+            logging.info(content)
         content = content.replace('ๅ','')
         
         return RawNewsEntity(publish_date=date,
