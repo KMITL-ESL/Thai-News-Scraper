@@ -52,6 +52,7 @@ agency:
     max_news_per_batch: 1000
     indexes_matichon:
      - https://www.matichon.co.th/lifestyle/tech/
+     - https://www.matichon.co.th/stock-finance/stock-markets/
      - https://www.matichon.co.th/stock-finance/daily-stock-markets/
      - https://www.matichon.co.th/economy/auto/
   bkkbiznews:
@@ -78,7 +79,7 @@ agency:
         minute: 15
       - hour: 15
         minute: 15
-    since_datedelta: 4
+    since_datedelta: 2
     max_news_per_batch: 1000
     indexes_the_standard:
      - https://thestandard.co/category/news/tech/
