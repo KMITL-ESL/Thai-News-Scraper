@@ -39,7 +39,7 @@ class MatichonAgency(Agency):
 
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-
+            
             soup = await self.scrap_html(index_url+'page/'+str(page_number) , params={'page': page_number})
             if soup is None:
                 logging.error(
