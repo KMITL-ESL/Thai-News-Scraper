@@ -42,7 +42,7 @@ class MgronlineAgency(Agency):
 
         all_links = set()
         for page_number in range(0, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)):
-        #for page_number in range(0, 39):
+
             soup = await self.scrap_html(index_url+'start='+str(page_number*10), params={'page': page_number})
             if soup is None:
                 logging.error(
@@ -50,6 +50,7 @@ class MgronlineAgency(Agency):
                 continue
 
             logging.info(f'page {page_number}')
+            
             articles = soup.find_all('a',attrs={'class':'link'}, href=True)
             date_texts = soup.find_all('time', attrs={'class':'p-date-time-item'})
             date_texts = list(map(lambda date_text: date_text['data-pdatatimedata'], date_texts))
@@ -75,20 +76,24 @@ class MgronlineAgency(Agency):
 
         logging.info(f'scrap {url}')
 
-        title = soup.find('header', attrs={'class': 'header-article'})
-        title = soup.find('h1').text.strip()
-        date_text = soup.find('time').text.strip()
+        if soup.find('div', attrs={'class': 'col-sm-7 col-md-8'}) is None:
+            logging.error(f'failed info page')
+            return
+        soup_news = soup.find('div', attrs={'class': 'col-sm-7 col-md-8'})
+        title = soup_news.find('header', attrs={'class': 'header-article'})
+        title = soup_news.find('h1').text.strip()
+        date_text = soup_news.find('time').text.strip()
         date = self.parse_date(date_text)
         logging.info(date)
-        content = soup.find('div', attrs={'class': 'article-content'}).text.strip()
+        content = soup_news.find('div', attrs={'class': 'article-content'}).text.strip()
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
                              source='MANAGERONLINE',
                              link=url
-                             )
-
+                             )    
+        
     async def scrap(self) -> List[RawNewsEntity]:
         index_urls = self.config['indexes_mgronline']
         links = set()

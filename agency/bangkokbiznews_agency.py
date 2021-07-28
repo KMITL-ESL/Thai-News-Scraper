@@ -37,20 +37,19 @@ class BkkbiznewsAgency(Agency):
 
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-
             soup = await self.scrap_html(index_url+str(page_number) , params={'page': page_number})
             if soup is None:
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
             logging.info(f'page {page_number}')
+
             articles = soup.find('div', attrs={'class':'read_post_list'})
             date_texts = soup.find_all('div', attrs={'class': 'event_date'})
             date_texts = list(map(lambda date_text: date_text.text, date_texts))
             articles = soup.find_all('h3', attrs={'class':'post_title'})
             articles = list(map(lambda link: link.find('a',  href=True), articles))
-            dates = list(
-                map(lambda date_text: self.parse_date(date_text), date_texts))
+            dates = list(map(lambda date_text: self.parse_date(date_text), date_texts))
             
             min_date = min(dates)
             max_date = max(dates)
@@ -83,7 +82,6 @@ class BkkbiznewsAgency(Agency):
         else:
             soup_news = soup_news.find('div', attrs={'class' : 'text-read'})
             content = ' '.join(' '.join(list(map(lambda text: text.get_text(), soup_news.find_all('div',attrs={'class': ''})))).split())
-            logging.info(content)
         content = content.replace('ๅ','')
         
         return RawNewsEntity(publish_date=date,
