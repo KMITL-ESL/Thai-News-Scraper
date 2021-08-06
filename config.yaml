@@ -1,7 +1,7 @@
 db:
   username: postgres
-  password: "esl2"
-  host: "localhost"
+  password: "{ko-hv,^]-jk;ESL"
+  host: "143.198.193.231"
   port: 5432
   database: postgres
   echo: False
@@ -86,5 +86,5 @@ agency:
      - https://thestandard.co/category/news/business/
      - https://thestandard.co/category/news/world/
 outbound:
-  post_news: http://localhost:8080/api/news
-  drop_news: http://localhost:8080/api/news
+  post_news: http://143.198.193.231/api/news
+  drop_news: http://143.198.193.231/api/news
