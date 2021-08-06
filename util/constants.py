@@ -46,7 +46,6 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "EEC Focus" : "eec",
     "Big Data Analysis" : "bigdataanalysis",
     "ข้อมูลเศรษฐกิจ" : "data",
-    "bizweek" : "bizweek",
     "ยานยนต์" : "auto",
     "นวัตกรรม" : "innovation",
     "ไอที-ไอเดีย" : "it"

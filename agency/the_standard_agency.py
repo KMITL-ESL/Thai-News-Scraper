@@ -39,8 +39,7 @@ class TheStandardAgency(Agency):
     async def scrap_links(self, index_url, from_date, to_date, max_news):
 
         all_links = set()
-        #for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-        for page_number in range(1, 2):
+        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
             soup = await self.scrap_html(index_url+'page/'+str(page_number), params={'page': page_number})
             if soup is None:
                 logging.error(
@@ -65,7 +64,7 @@ class TheStandardAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
-                if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', attrs={'class': 'title'}).text.strip().find('ชมคลิป:') is not 0:
+                if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
