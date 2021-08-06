@@ -14,6 +14,7 @@ class RawNewsEntity(Base):
     created_at = Column(DateTime, nullable=False)
     source = Column(String, nullable=False)
     link = Column(String, nullable=False, unique=True)
+    category = Column(String, nullable=False)
 
     def __repr__(self):
         return f"<RawNewsEntity(id={self.id}, title={self.title}, publish_date={self.publish_date})>" 

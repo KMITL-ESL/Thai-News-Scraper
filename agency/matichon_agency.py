@@ -39,7 +39,6 @@ class MatichonAgency(Agency):
 
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-            
             soup = await self.scrap_html(index_url+'page/'+str(page_number) , params={'page': page_number})
             if soup is None:
                 logging.error(
@@ -77,6 +76,9 @@ class MatichonAgency(Agency):
 
         logging.info(f'scrap {url}')
 
+        category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
+        category = category[-1].text
+        category = constants.TH_MATICHON_CATEGORY_MAPPER[category]
         title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
         date_text = soup.find('span', 
                     attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()
@@ -88,7 +90,8 @@ class MatichonAgency(Agency):
                              content=content,
                              created_at=datetime.now(),
                              source='MATICHON',
-                             link=url
+                             link=url,
+                             category=category
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:

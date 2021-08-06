@@ -74,6 +74,9 @@ class BkkbiznewsAgency(Agency):
         logging.info(f'scrap {url}')
 
         soup_news = soup.find('div', attrs={'class': 'col-lg-8 col-md-8 col-sm-12'})
+        category = soup.find('div', attrs={'class': 'col-sm-10 col-xs-5'}).find_all('span')
+        category = category[-1].text
+        category = constants.TH_BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
         title = soup.find('h1', attrs={'class': 'section_title section_title_medium_var2'}).text.strip()
         date_text = soup_news.find('div', attrs={'class': 'event_date'}).text.strip()
         date = self.parse_date(date_text)
@@ -89,7 +92,8 @@ class BkkbiznewsAgency(Agency):
                              content=content,
                              created_at=datetime.now(),
                              source='BANGKOKBIZNEWS',
-                             link=url
+                             link=url,
+                             category=category
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:
