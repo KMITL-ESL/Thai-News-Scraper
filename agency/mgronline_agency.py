@@ -41,8 +41,8 @@ class MgronlineAgency(Agency):
     async def scrap_links(self, index_url, from_date, to_date, max_news):
 
         all_links = set()
+        #for page_number in range(0, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)):
         for page_number in range(0, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)):
-
             soup = await self.scrap_html(index_url+'start='+str(page_number*10), params={'page': page_number})
             if soup is None:
                 logging.error(
@@ -86,12 +86,15 @@ class MgronlineAgency(Agency):
         date = self.parse_date(date_text)
         logging.info(date)
         content = soup_news.find('div', attrs={'class': 'article-content'}).text.strip()
+        category = url.split("/")[3]
+
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
                              source='MANAGERONLINE',
-                             link=url
+                             link=url,
+                             category=category
                              )    
         
     async def scrap(self) -> List[RawNewsEntity]:

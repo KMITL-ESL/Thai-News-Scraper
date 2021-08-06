@@ -15,7 +15,7 @@ agency:
       - hour: 6
         minute: 15
       - hour: 15
-        minute: 15
+        minute: 55
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
@@ -29,7 +29,7 @@ agency:
       - hour: 6
         minute: 15
       - hour: 15
-        minute: 15
+        minute: 55
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_mgronline:
@@ -47,7 +47,7 @@ agency:
       - hour: 6
         minute: 15
       - hour: 15
-        minute: 15
+        minute: 55
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_matichon:
@@ -62,7 +62,7 @@ agency:
       - hour: 6
         minute: 15
       - hour: 15
-        minute: 15
+        minute: 55
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_bkkbiznews:
@@ -78,7 +78,7 @@ agency:
       - hour: 6
         minute: 15
       - hour: 15
-        minute: 15
+        minute: 55
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_the_standard:

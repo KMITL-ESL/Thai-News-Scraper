@@ -39,8 +39,8 @@ class TheStandardAgency(Agency):
     async def scrap_links(self, index_url, from_date, to_date, max_news):
 
         all_links = set()
-        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-
+        #for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
+        for page_number in range(1, 2):
             soup = await self.scrap_html(index_url+'page/'+str(page_number), params={'page': page_number})
             if soup is None:
                 logging.error(
@@ -65,7 +65,7 @@ class TheStandardAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
-                if  soup.find('div', attrs={'class':'meta-date'}) is not None:
+                if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', attrs={'class': 'title'}).text.strip().find('ชมคลิป:') is not 0:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
@@ -80,6 +80,8 @@ class TheStandardAgency(Agency):
 
         logging.info(f'scrap {url}')
 
+        category = soup.find('span', attrs={'class': 'category'}).text.strip()
+        category = category.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
         title = soup.find('h1', attrs={'class': 'title'}).text.strip()
         date_text = soup.find('div', attrs={'class': 'meta-date'}).text.strip()
         date = self.parse_date(date_text)
@@ -91,7 +93,8 @@ class TheStandardAgency(Agency):
                              content=content,
                              created_at=datetime.now(),
                              source='THE STANDARD',
-                             link=url
+                             link=url,
+                             category=category
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:

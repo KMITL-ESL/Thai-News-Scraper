@@ -60,7 +60,6 @@ class DailynewsAgency(Agency):
 
             links = list(
                 map(lambda link: f'{link["href"]}', articles))
-            logging.info(articles)
             for date, link in zip(dates, links):
                 all_links.add(link)
                 logging.info(link)
@@ -84,15 +83,15 @@ class DailynewsAgency(Agency):
         date = self.parse_date(date_text)
         content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
                   }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
-        tags = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a', 
-               attrs={'class': 'elementor-post-info__terms-list-item'})
-        category = tags[-1].text.strip()
+        category = url.split("/")[3]
+
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
                              source='DAILYNEWS',
-                             link=url
+                             link=url,
+                             category=category
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:
