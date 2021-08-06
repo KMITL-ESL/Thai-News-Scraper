@@ -92,8 +92,7 @@ class BkkbiznewsAgency(Agency):
                              content=content,
                              created_at=datetime.now(),
                              source='BANGKOKBIZNEWS',
-                             link=url,
-                             category=category
+                             link=url
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:

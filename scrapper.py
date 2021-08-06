@@ -55,10 +55,10 @@ async def scrap_mgronline():
 async def scrap_matichon():
     # await adapter.publish_drop_table()
     raw_news_entities = await matichon_agency.scrap()
-    # for entity in raw_news_entities:
-    #     insert_raw_news(entity)
-    #     post_news_response = await adapter.publish_raw_news(entity)
-    #     logging.info(post_news_response)
+    for entity in raw_news_entities:
+        insert_raw_news(entity)
+        post_news_response = await adapter.publish_raw_news(entity)
+        logging.info(post_news_response)
 
 async def scrap_bkkbiznews():
     # await adapter.publish_drop_table()
@@ -77,11 +77,11 @@ async def scrap_the_standard():
         logging.info(post_news_response)
 
 async def main():
-    # await scrap_dailynews()
-    # await scrap_mgronline()
+    await scrap_dailynews()
+    await scrap_mgronline()
     await scrap_matichon()
-    # await scrap_bkkbiznews()
-    # await scrap_the_standard()
+    await scrap_bkkbiznews()
+    await scrap_the_standard()
 
 
 if __name__ == '__main__':
