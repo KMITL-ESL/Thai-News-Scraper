@@ -61,8 +61,11 @@ class DailynewsAgency(Agency):
             links = list(
                 map(lambda link: f'{link["href"]}', articles))
             for date, link in zip(dates, links):
-                all_links.add(link)
-                logging.info(link)
+                soup = await self.scrap_html(link)
+                if soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip().find('การ์ตูน') == -1 and soup.find('h1',
+                attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip().find('รู้หรือไม่') == -1:
+                    all_links.add(link)
+                    logging.info(link)
             if min_date < from_date:
                 break
 
@@ -76,6 +79,10 @@ class DailynewsAgency(Agency):
 
         logging.info(f'scrap {url}')
 
+        category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a',attrs={'class':'elementor-post-info__terms-list-item'})
+        category = category[0].text
+        category = constants.TH_DAILYNEWS_CATEGORY_MAPPER[category]
+        print(category)
         title = soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()
         date_text = soup.find('span', 
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
@@ -83,7 +90,6 @@ class DailynewsAgency(Agency):
         date = self.parse_date(date_text)
         content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
                   }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
-        category = url.split("/")[3]
 
         return RawNewsEntity(publish_date=date,
                              title=title,

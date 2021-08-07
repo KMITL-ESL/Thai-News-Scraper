@@ -64,7 +64,8 @@ class TheStandardAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
-                if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1:
+                if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', 
+                attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:

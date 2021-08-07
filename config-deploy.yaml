@@ -22,6 +22,12 @@ agency:
     - https://www.dailynews.co.th/news/news_group/เศรษฐกิจ-ยานยนต์/
     - https://www.dailynews.co.th/news/news_group/ต่างประเทศ/
     - https://www.dailynews.co.th/news/news_group/การศึกษา-ไอที/
+    - https://www.dailynews.co.th/news/news_group/อื่นๆ/ #หมวดใหม่
+    - https://www.dailynews.co.th/news/news_group/บันเทิง/ #หมวดใหม่
+    - https://www.dailynews.co.th/news/news_group/กีฬา/ #หมวดใหม่
+    - https://www.dailynews.co.th/news/news_group/การเมือง/ #หมวดใหม่
+    - https://www.dailynews.co.th/news/news_group/อาชญากรรม/ #หมวดใหม่
+    - https://www.dailynews.co.th/news/news_group/ทั่วไทย-กทม/ #หมวดใหม่
   mgronline:
     scheduler:
       - hour: 1
@@ -38,8 +44,45 @@ agency:
      - https://mgronline.com/science/5504/5530/ #วิทยาศาสตร์-อวกาศ-เทคโนโลยีอวกาศ
      - https://mgronline.com/business/4450/4401/ #เศรษฐกิจ-ธุรกิจ การค้า-อุตสาหกรรม-คมนาคม อุตสาหกรรม-พลังงาน
      - https://mgronline.com/business/4450/4402/ #เศรษฐกิจ-ธุรกิจ การค้า-อุตสาหกรรม-คมนาคม คมนาคม-ขนส่ง
+     - https://mgronline.com/business/4451/4409/ #new
+     - https://mgronline.com/business/4511/ #new
+     - https://mgronline.com/business/4512/ #new
      - https://mgronline.com/motoring/3201/ #Motoring ข่าวรถ
+     - https://mgronline.com/motoring/3199/
+     - https://mgronline.com/motoring/3215/
+     - https://mgronline.com/motoring/3210/
+     - https://mgronline.com/motoring/3204/
      - https://mgronline.com/cyberbiz/3501/3502/ #Cyber BIZ ข่าวไอที อิเล็กทรอนิกส์
+     - https://mgronline.com/uptodate/
+     - https://mgronline.com/local/1217/ #สังคมทั่วไทย new
+     - https://mgronline.com/columnist/1423/ #new
+     - https://mgronline.com/greeninnovation/1169/ #new
+     - https://mgronline.com/greeninnovation/1166/ #new
+     - https://mgronline.com/greeninnovation/1182/ #new
+     - https://mgronline.com/greeninnovation/1171/ #new
+     - https://mgronline.com/greeninnovation/1172/ #new
+     - https://mgronline.com/politics/6023/
+     - https://mgronline.com/politics/6051/
+     - https://mgronline.com/politics/6002/
+     - https://mgronline.com/sport/1322/1317/
+     - https://mgronline.com/sport/premierleague/
+     - https://mgronline.com/sport/laliga/
+     - https://mgronline.com/sport/golf/1334/
+     - https://mgronline.com/sport/golf/1335/
+     - https://mgronline.com/around/9031/
+     - https://mgronline.com/around/9040/9100/
+     - https://mgronline.com/around/9040/9103/
+     - https://mgronline.com/around/9040/9107/
+     - https://mgronline.com/around/9040/9104/
+     - https://mgronline.com/around/9040/9101/
+     - https://mgronline.com/around/9040/9106/
+     - https://mgronline.com/around/9040/9102/
+     - https://mgronline.com/crime/4012/
+     - https://mgronline.com/qol/8524/
+     - https://mgronline.com/qol/8502/
+     - https://mgronline.com/qol/8503/
+     - https://mgronline.com/qol/8504/
+     - https://mgronline.com/qol/8506/
   matichon:
     scheduler:
       - hour: 1
@@ -52,8 +95,20 @@ agency:
     max_news_per_batch: 1000
     indexes_matichon:
      - https://www.matichon.co.th/lifestyle/tech/
+     - https://www.matichon.co.th/stock-finance/stock-markets/ #หมวดใหม่
      - https://www.matichon.co.th/stock-finance/daily-stock-markets/
      - https://www.matichon.co.th/economy/auto/
+     - https://www.matichon.co.th/covid19/ #หมวดใหม่
+     - https://www.matichon.co.th/local/ #หมวดใหม่
+     - https://www.matichon.co.th/local/crime/ #หมวดใหม่
+     - https://www.matichon.co.th/foreign/ #หมวดใหม่
+     - https://www.matichon.co.th/lifestyle/health-beauty/ #หมวดใหม่
+     - https://www.matichon.co.th/social/ #หมวดใหม่
+     - https://www.matichon.co.th/article/ #หมวดใหม่
+     - https://www.matichon.co.th/lifestyle/ #หมวดใหม่
+     - https://www.matichon.co.th/region/ #หมวดใหม่
+     - https://www.matichon.co.th/entertainment/ #หมวดใหม่
+     - https://www.matichon.co.th/columnists/ #หมวดใหม่
   bkkbiznews:
     scheduler:
       - hour: 1
@@ -70,6 +125,17 @@ agency:
      - https://www.bangkokbiznews.com/auto/list/
      - https://www.bangkokbiznews.com/innovation/list/
      - https://www.bangkokbiznews.com/it/list/
+     - https://www.bangkokbiznews.com/politics/list/
+     - https://www.bangkokbiznews.com/bangkok/list/
+     - https://www.bangkokbiznews.com/local/list/
+     - https://www.bangkokbiznews.com/property/list/
+     - https://www.bangkokbiznews.com/foreign/list/
+     - https://www.bangkokbiznews.com/sport/list/
+     - https://www.bangkokbiznews.com/travel/list/
+     - https://www.bangkokbiznews.com/social/list/
+     - https://www.bangkokbiznews.com/pr/it/
+     - https://www.bangkokbiznews.com/pr/health/
+     - https://www.bangkokbiznews.com/pr/finance/
   the_standard:
     scheduler:
       - hour: 1
@@ -84,6 +150,11 @@ agency:
      - https://thestandard.co/category/news/tech/
      - https://thestandard.co/category/news/business/
      - https://thestandard.co/category/news/world/
+     - https://thestandard.co/category/news/politics/
+     - https://thestandard.co/category/news/thailand/
+     - https://thestandard.co/category/news/sport/
+     - https://thestandard.co/category/news/environment/
+     - https://thestandard.co/category/news/science/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news
