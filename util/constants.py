@@ -28,6 +28,25 @@ TH_FULL_MONTHS_MAPPER_MGR = {
     "ธ.ค.": 'December',
 }
 
+TH_DAILYNEWS_CATEGORY_MAPPER = {
+    "เศรษฐกิจ-ยานยนต์" : "economic","เศรษฐกิจจานร้อน" : "economic","มุมคนเมือง" : "economic","ป้ายแดงชวนขับ" : "economic",
+    "พาหนะคู่ใจ" : "economic","รู้ก่อนเหยียบ" : "economic",
+    "การเมือง" : "politics","ที่เห็นที่เป็นอยู่" : "politics","คอลัมนิสต์" : "politics","เลียบค่ายกองทัพ" : "politics",
+    "ตรวจการบ้าน" : "politics","ว่ายทวนน้ำ" : "politics",
+    "เกษตร" : "agriculture",
+    "ทั่วไทย-กทม." : "thailand","คนดีของสังคม" : "thailand","นิยายชีวิต" : "thailand","Special Report" : "thailand",
+    "สังคมภูมิภาค" : "thailand","ส่องพระยอดนิยม" : "thailand",
+    "การศึกษา-ไอที" : "education-it","การศึกษา" : "education-it","ไอที" : "education-it",
+    "ท้องถิ่น" : "local", "ช่องทางทำกิน" : "local", "รายงานพิเศษ" : "local",
+    "กีฬา" : "sport","Crazy Football" : "sport","สังคมกอล์ฟ" : "sport",
+    "สุขภาพ-ความงาม" : "health-beauty",
+    "อาชญากรรม" : "crime","หนอนโรงพัก" : "crime","สน.รอตรวจ" : "crime","เกาะประเด็นดัง" : "crime",
+    "บันเทิง" : "entertainment","ดูหนังกับหมี" : "entertainment","1 Day with ซุปตาร์" : "entertainment","มายาลั้ลลา" : "entertainment",
+    "บันเทิงต่างประเทศ" : "entertainment",
+    "ต่างประเทศ" : "foreign","ผ่าโลกวันอาทิตย์" : "foreign","สารพันต่างแดน" : "foreign",
+    "ที่นี่จากยูเอสเอ" : "foreign","คนไทยในออสเตรเลีย" : "foreign"
+}
+
 TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "เศรษฐกิจ" : "economic",
     "การเมือง" : "politics",
@@ -38,9 +57,9 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "คุณภาพชีวิต-สังคม" : "life",
     "จุดประกาย" : "judprakai",
     "ไลฟ์สไตล์" : "lifestyle",
-    "PR" : "pr",
+    "ข่าวประชาสัมพันธ์" : "pr",
     "ข่าวพระราชสำนัก" : "royal",
-    "อาชญากรรม" : "bangkok",
+    "อาชญากรรม" : "crime",
     "ทั่วไทย" : "local",
     "บทวิเคราะห์" : "analysis",
     "EEC Focus" : "eec",
@@ -48,7 +67,8 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "ข้อมูลเศรษฐกิจ" : "data",
     "ยานยนต์" : "auto",
     "นวัตกรรม" : "innovation",
-    "ไอที-ไอเดีย" : "it"
+    "ไอที-ไอเดีย" : "it",
+    "อสังหาริมทรัพย์" : "property"
 }
 
 TH_MATICHON_CATEGORY_MAPPER = {
