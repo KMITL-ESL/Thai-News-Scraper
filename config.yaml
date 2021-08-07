@@ -98,7 +98,6 @@ agency:
      - https://www.matichon.co.th/stock-finance/stock-markets/ #หมวดใหม่
      - https://www.matichon.co.th/stock-finance/daily-stock-markets/
      - https://www.matichon.co.th/economy/auto/
-     - https://www.matichon.co.th/covid19/ #หมวดใหม่
      - https://www.matichon.co.th/local/ #หมวดใหม่
      - https://www.matichon.co.th/local/crime/ #หมวดใหม่
      - https://www.matichon.co.th/foreign/ #หมวดใหม่
@@ -109,6 +108,7 @@ agency:
      - https://www.matichon.co.th/region/ #หมวดใหม่
      - https://www.matichon.co.th/entertainment/ #หมวดใหม่
      - https://www.matichon.co.th/columnists/ #หมวดใหม่
+     - https://www.matichon.co.th/covid19/
   bkkbiznews:
     scheduler:
       - hour: 1

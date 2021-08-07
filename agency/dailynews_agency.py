@@ -81,8 +81,12 @@ class DailynewsAgency(Agency):
 
         category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a',attrs={'class':'elementor-post-info__terms-list-item'})
         category = category[0].text
-        category = constants.TH_DAILYNEWS_CATEGORY_MAPPER[category]
-        print(category)
+        try:
+            category = constants.TH_DAILYNEWS_CATEGORY_MAPPER[category]
+        except:
+            print("Something went wrong")
+        finally:
+            print(category)
         title = soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()
         date_text = soup.find('span', 
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
