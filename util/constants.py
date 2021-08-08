@@ -68,7 +68,7 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "ยานยนต์" : "auto",
     "นวัตกรรม" : "innovation",
     "ไอที-ไอเดีย" : "it",
-    "อสังหาริมทรัพย์" : "property"
+    "อสังหาริมทรัพย์" : "property",
 }
 
 TH_MATICHON_CATEGORY_MAPPER = {
@@ -77,10 +77,11 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "หุ้น-การเงิน" : "stock-finance",
     "ธุรกิจ" : "business",
     "ต่างประเทศ" : "foreign",
-    "ไลฟ์สไตล์" : "lifestyle",
+    "ไลฟ์สไตล์" : "lifestyle","สุขภาพ-ความงาม" : "lifestyle",
+    "สังคม-สตรี" : "lifestyle","ดวง-โหราศาสตร์" : "lifestyle","อาหาร-ท่องเที่ยว" : "lifestyle","เด็ก-เยาวชน" : "lifestyle",
     "ข่าวพระราชสำนัก" : "royal",
-    "อาชญากรรม" : "crime",
-    "ทั่วไทย" : "local",
+    "อาชญากรรรม-กระบวนการยุติธรรม" : "crime", "อาชญากรรรม" : "crime",
+    "ในประเทศ" : "local",
     "บทวิเคราะห์" : "analysis",
     "คอลัมนิสต์" : "columnists",
     "วิทยาการ-ไอที" : "tech",
@@ -88,6 +89,12 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "รถยนต์" : "auto",
     "ภาวะหุ้นรายวัน" : "daily-stock-markets",
     "ตลาดหุ้น" : "stock-markets",
+    "ภูมิภาค" : "region",
+    "เกาะกระแสโซเชียล" : "social",
+    "บันเทิง" : "entertainment",
+    "ชีวิตคุณภาพ" : "quality-life",
+    "บทความ" : "article", "สถานีคิดเลขที่ 12" : "article", "เดินหน้าชน" : "article", "คุณภาพคือความอยู่รอด" : "article",
+    "เกาะติด Covid-19" : "covid19", "โควิด-ไทย" : "covid19"
 }
 
 NEWS_MAX_NUM_PER_PAGE = 10

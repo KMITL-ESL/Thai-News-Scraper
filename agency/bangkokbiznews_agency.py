@@ -58,8 +58,10 @@ class BkkbiznewsAgency(Agency):
                 map(lambda link: f'{link["href"]}', articles))
 
             for date, link in zip(dates, links):
-                all_links.add(link)
-                logging.info(link)
+                soup = await self.scrap_html(link)
+                if soup.find('h1', attrs={'class': 'section_title section_title_medium_var2'}) is not None:
+                    all_links.add(link)
+                    logging.info(link)
             if min_date < from_date:
                 break
 
@@ -76,7 +78,12 @@ class BkkbiznewsAgency(Agency):
         soup_news = soup.find('div', attrs={'class': 'col-lg-8 col-md-8 col-sm-12'})
         category = soup.find('div', attrs={'class': 'col-sm-10 col-xs-5'}).find_all('span')
         category = category[-1].text
-        category = constants.TH_BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
+        try:
+            category = constants.TH_BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
+        except:
+            print("Something went wrong")
+        finally:
+            print(category)
         title = soup.find('h1', attrs={'class': 'section_title section_title_medium_var2'}).text.strip()
         date_text = soup_news.find('div', attrs={'class': 'event_date'}).text.strip()
         date = self.parse_date(date_text)

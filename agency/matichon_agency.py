@@ -61,8 +61,12 @@ class MatichonAgency(Agency):
                 map(lambda link: f'{link["href"]}', articles))
 
             for date, link in zip(dates, links):
-                all_links.add(link)
-                logging.info(link)
+                soup = await self.scrap_html(link)
+                tag = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
+                tag = tag[-1].text
+                if tag != 'แฟชั่น':
+                    all_links.add(link)
+                    logging.info(link)
             if min_date < from_date:
                 break
 
@@ -78,7 +82,12 @@ class MatichonAgency(Agency):
 
         category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
         category = category[-1].text
-        category = constants.TH_MATICHON_CATEGORY_MAPPER[category]
+        try:
+            category = constants.TH_MATICHON_CATEGORY_MAPPER[category]
+        except:
+            print("Something went wrong")
+        finally:
+            print(category)
         title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
         date_text = soup.find('span', 
                     attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()
