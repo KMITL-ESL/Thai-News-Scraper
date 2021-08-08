@@ -77,7 +77,7 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "หุ้น-การเงิน" : "stock-finance",
     "ธุรกิจ" : "business",
     "ต่างประเทศ" : "foreign",
-    "ไลฟ์สไตล์" : "lifestyle","สุขภาพ-ความงาม" : "lifestyle","แฟชั่น" : "lifestyle",
+    "ไลฟ์สไตล์" : "lifestyle","สุขภาพ-ความงาม" : "lifestyle",
     "สังคม-สตรี" : "lifestyle","ดวง-โหราศาสตร์" : "lifestyle","อาหาร-ท่องเที่ยว" : "lifestyle","เด็ก-เยาวชน" : "lifestyle",
     "ข่าวพระราชสำนัก" : "royal",
     "อาชญากรรรม-กระบวนการยุติธรรม" : "crime", "อาชญากรรรม" : "crime",
@@ -93,7 +93,7 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "เกาะกระแสโซเชียล" : "social",
     "บันเทิง" : "entertainment",
     "ชีวิตคุณภาพ" : "quality-life",
-    "บทความ" : "article",
+    "บทความ" : "article", "สถานีคิดเลขที่ 12" : "article", "เดินหน้าชน" : "article", "คุณภาพคือความอยู่รอด" : "article",
     "เกาะติด Covid-19" : "covid19", "โควิด-ไทย" : "covid19"
 }
 
