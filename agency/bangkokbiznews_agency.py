@@ -37,7 +37,7 @@ class BkkbiznewsAgency(Agency):
 
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-            soup = await self.scrap_html(index_url+str(page_number) , params={'page': page_number})
+            soup = await self.scrap_html(index_url+str(page_number))
             if soup is None:
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')

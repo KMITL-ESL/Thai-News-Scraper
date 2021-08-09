@@ -109,6 +109,7 @@ agency:
      - https://www.matichon.co.th/entertainment/ #หมวดใหม่
      - https://www.matichon.co.th/columnists/ #หมวดใหม่
      - https://www.matichon.co.th/covid19/
+     - https://www.matichon.co.th/sport/
   bkkbiznews:
     scheduler:
       - hour: 1

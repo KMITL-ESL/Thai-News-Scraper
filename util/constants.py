@@ -38,7 +38,7 @@ TH_DAILYNEWS_CATEGORY_MAPPER = {
     "สังคมภูมิภาค" : "thailand","ส่องพระยอดนิยม" : "thailand",
     "การศึกษา-ไอที" : "education-it","การศึกษา" : "education-it","ไอที" : "education-it",
     "ท้องถิ่น" : "local", "ช่องทางทำกิน" : "local", "รายงานพิเศษ" : "local",
-    "กีฬา" : "sport","Crazy Football" : "sport","สังคมกอล์ฟ" : "sport",
+    "กีฬา" : "sports","Crazy Football" : "sports","สังคมกอล์ฟ" : "sports",
     "สุขภาพ-ความงาม" : "health-beauty",
     "อาชญากรรม" : "crime","หนอนโรงพัก" : "crime","สน.รอตรวจ" : "crime","เกาะประเด็นดัง" : "crime",
     "บันเทิง" : "entertainment","ดูหนังกับหมี" : "entertainment","1 Day with ซุปตาร์" : "entertainment","มายาลั้ลลา" : "entertainment",
@@ -94,7 +94,12 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "บันเทิง" : "entertainment",
     "ชีวิตคุณภาพ" : "quality-life",
     "บทความ" : "article", "สถานีคิดเลขที่ 12" : "article", "เดินหน้าชน" : "article", "คุณภาพคือความอยู่รอด" : "article",
-    "เกาะติด Covid-19" : "covid19", "โควิด-ไทย" : "covid19"
+    "เกาะติด Covid-19" : "covid19", "โควิด-ไทย" : "covid19",
+    "กีฬา" : "sports", "เจาะลึกแดนอาทิตย์อุทัย" : "sports", "เกาะติดโตเกียวเกมส์" : "sports", "Sport Scoops" : "sports",
+    "กีฬาต่างประเทศ" : "sports", "กีฬาในประเทศ" : "sports", "ฟุตบอลต่างประเทศ" : "sports", "ฟุตบอลในประเทศ" : "sports",
+    "Sport Slide" : "sports", "โตเกียวเกมส์" : "sports", "มวย" : "sports"
 }
+
+TAG_DELETE = ['Hot Shot! อินแจแปน','คลิปลุยโตเกียว 2020','แฟชั่น']
 
 NEWS_MAX_NUM_PER_PAGE = 10

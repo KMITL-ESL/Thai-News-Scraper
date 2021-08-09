@@ -42,7 +42,7 @@ class MgronlineAgency(Agency):
 
         all_links = set()
         for page_number in range(0, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)):
-            soup = await self.scrap_html(index_url+'start='+str(page_number*10), params={'page': page_number})
+            soup = await self.scrap_html(index_url+'start='+str(page_number*10))
             if soup is None:
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
