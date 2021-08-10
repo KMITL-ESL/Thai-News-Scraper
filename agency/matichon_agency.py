@@ -44,21 +44,19 @@ class MatichonAgency(Agency):
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
-            logging.info(f'page {page_number}')
-
-            articles = soup.find('div', attrs={'class', 'td-ss-main-content'})
-            date_texts = (articles.find_all('span', attrs={'class': 'td-post-date'}))
-            date_texts = list(map(lambda date_text: date_text.find('time',attrs={'class': 
-            'entry-date updated td-module-date'}).text, date_texts))
-            articles = soup.find_all('a',attrs={'class':'ud-module-link'}, href=True)
-            dates = list(
-                map(lambda date_text: self.parse_date(date_text), date_texts))
-            
-            min_date = min(dates)
-            max_date = max(dates)
-
-            links = list(
-                map(lambda link: f'{link["href"]}', articles))
+            try:
+                logging.info(f'page {page_number}')
+                articles = soup.find('div', attrs={'class', 'td-ss-main-content'})
+                date_texts = (articles.find_all('span', attrs={'class': 'td-post-date'}))
+                date_texts = list(map(lambda date_text: date_text.find('time',attrs={'class': 
+                    'entry-date updated td-module-date'}).text, date_texts))
+                articles = soup.find_all('a',attrs={'class':'ud-module-link'}, href=True)
+                dates = list(map(lambda date_text: self.parse_date(date_text), date_texts))
+                min_date = min(dates)
+                max_date = max(dates)
+                links = list(map(lambda link: f'{link["href"]}', articles))
+            except:
+                break
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)

@@ -45,22 +45,20 @@ class TheStandardAgency(Agency):
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
-            
-            logging.info(f'page {page_number}')
-            
-            articles = soup.find('div', attrs={'class': 'newsbox-archive'})
-            date_texts = soup.find_all('div', attrs={'class': 'date'})
-            date_texts = list(map(lambda date_text: date_text.text, date_texts))
-            articles = articles.find_all('div', attrs={'class':'news-item'})
-            articles = list(map(lambda article: article.find('h3', attrs={'class':'news-title'}), articles))
-            articles = list(map(lambda link: link.find('a',  href=True), articles))
-            dates = list(map(lambda date_text: self.parse_date_index(date_text), date_texts))
-
-            min_date = min(dates)
-            max_date = max(dates)
-
-            links = list(
-                map(lambda link: f'{link["href"]}', articles))
+            try:
+                logging.info(f'page {page_number}') 
+                articles = soup.find('div', attrs={'class': 'newsbox-archive'})
+                date_texts = soup.find_all('div', attrs={'class': 'date'})
+                date_texts = list(map(lambda date_text: date_text.text, date_texts))
+                articles = articles.find_all('div', attrs={'class':'news-item'})
+                articles = list(map(lambda article: article.find('h3', attrs={'class':'news-title'}), articles))
+                articles = list(map(lambda link: link.find('a',  href=True), articles))
+                dates = list(map(lambda date_text: self.parse_date_index(date_text), date_texts))
+                min_date = min(dates)
+                max_date = max(dates)
+                links = list(map(lambda link: f'{link["href"]}', articles))
+            except:
+                break
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)

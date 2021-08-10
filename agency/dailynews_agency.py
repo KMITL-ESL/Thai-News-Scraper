@@ -44,26 +44,26 @@ class DailynewsAgency(Agency):
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
-            
-            logging.info(f'page {page_number}')
-            
-            articles = soup.find_all('a', attrs={'class': 'elementor-post__thumbnail__link'}, href=True)
-            date_texts = soup.find_all('div', attrs={'class': 'elementor-post__meta-data'})
-            date_texts = list(map(lambda date_text: date_text.find(
+            try:
+                logging.info(f'page {page_number}')
+                articles = soup.find_all('a', attrs={'class': 'elementor-post__thumbnail__link'}, href=True)
+                date_texts = soup.find_all('div', attrs={'class': 'elementor-post__meta-data'})
+                date_texts = list(map(lambda date_text: date_text.find(
                 'span', attrs={'class': 'elementor-post-date'}).text+' '+
                 date_text.find('span', attrs={'class': 'elementor-post-time'}).text, date_texts))
-            dates = list(
+                dates = list(
                 map(lambda date_text: self.parse_date(date_text), date_texts))
+                links = list(map(lambda link: f'{link["href"]}', articles))
+                min_date = min(dates)
+                max_date = max(dates)
+            except:
+                break
             
-            min_date = min(dates)
-            max_date = max(dates)
-
-            links = list(
-                map(lambda link: f'{link["href"]}', articles))
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
+                tag = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'})
                 if soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip().find('การ์ตูน') == -1 and soup.find('h1',
-                attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip().find('รู้หรือไม่') == -1:
+                attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip().find('รู้หรือไม่') == -1 and tag is not None:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
