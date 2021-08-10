@@ -86,6 +86,12 @@ class MgronlineAgency(Agency):
         logging.info(date)
         content = soup_news.find('div', attrs={'class': 'article-content'}).text.strip()
         category = url.split("/")[3]
+        try:
+            category = constants.TH_MANGERONLINE_CATEGORY_MAPPER[category]
+        except:
+            print("Something went wrong")
+        finally:
+            print(category)
 
         return RawNewsEntity(publish_date=date,
                              title=title,
