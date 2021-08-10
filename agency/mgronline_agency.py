@@ -47,18 +47,18 @@ class MgronlineAgency(Agency):
                 logging.error(
                     f'failed to obtain {index_url} with page {page_number}')
                 continue
-
-            logging.info(f'page {page_number}')
+            try:
+                logging.info(f'page {page_number}')
+                articles = soup.find_all('a',attrs={'class':'link'}, href=True)
+                date_texts = soup.find_all('time', attrs={'class':'p-date-time-item'})
+                date_texts = list(map(lambda date_text: date_text['data-pdatatimedata'], date_texts))
+                dates = list(map(lambda date_text: self.parse_date_index(date_text), date_texts))
+                min_date = min(dates)
+                max_date = max(dates)
+                links = list(map(lambda link: f'{link["href"]}', articles))
+            except:
+                break
             
-            articles = soup.find_all('a',attrs={'class':'link'}, href=True)
-            date_texts = soup.find_all('time', attrs={'class':'p-date-time-item'})
-            date_texts = list(map(lambda date_text: date_text['data-pdatatimedata'], date_texts))
-            dates = list(
-                map(lambda date_text: self.parse_date_index(date_text), date_texts))
-            min_date = min(dates)
-            max_date = max(dates)
-            links = list(
-                map(lambda link: f'{link["href"]}', articles))
             for date, link in zip(dates, links):
                 if soup.find_all('time', attrs={'class':'p-date-time-item'}) is not None and soup.find_all('a',attrs={'class':'link'}, href=True) is not None:
                     all_links.add(link)

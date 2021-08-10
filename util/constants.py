@@ -30,6 +30,7 @@ TH_FULL_MONTHS_MAPPER_MGR = {
 
 TH_DAILYNEWS_CATEGORY_MAPPER = {
     "เศรษฐกิจ-ยานยนต์" : "economic","เศรษฐกิจจานร้อน" : "economic","มุมคนเมือง" : "economic","ป้ายแดงชวนขับ" : "economic",
+    "รวมข่าวโควิด-19" : "economic", "ธุรกิจ" : "economic",
     "พาหนะคู่ใจ" : "economic","รู้ก่อนเหยียบ" : "economic",
     "การเมือง" : "politics","ที่เห็นที่เป็นอยู่" : "politics","คอลัมนิสต์" : "politics","เลียบค่ายกองทัพ" : "politics",
     "ตรวจการบ้าน" : "politics","ว่ายทวนน้ำ" : "politics",
