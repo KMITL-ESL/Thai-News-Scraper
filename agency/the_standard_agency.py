@@ -81,7 +81,12 @@ class TheStandardAgency(Agency):
         logging.info(f'scrap {url}')
 
         category = soup.find('span', attrs={'class': 'category'}).text.strip()
-        category = category.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
+        try:
+            category = category.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
+        except:
+            print("Something went wrong")
+        finally:
+            print(category)
         title = soup.find('h1', attrs={'class': 'title'}).text.strip()
         date_text = soup.find('div', attrs={'class': 'meta-date'}).text.strip()
         date = self.parse_date(date_text)

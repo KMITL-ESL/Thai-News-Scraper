@@ -100,6 +100,23 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "Sport Slide" : "sports", "โตเกียวเกมส์" : "sports", "มวย" : "sports"
 }
 
+TH_MANGERONLINE_CATEGORY_MAPPER = {
+    "qol" : "quality-life",
+    "around" : "foreign",
+    "crime" : "crime",
+    "sport" : "sports",
+    "science" : "science",
+    "uptodate" : "uptodate",
+    "cyberbiz" : "cyberbiz",
+    "motoring" : "motoring",
+    "stockmarket" : "stockmarket",
+    "business" : "business",
+    "greeninnovation" : "greeninnovation",
+    "columnist" : "columnist",
+    "local" : "local",
+    "politics" : "politics",
+}
+
 TAG_DELETE = ['Hot Shot! อินแจแปน','คลิปลุยโตเกียว 2020','แฟชั่น']
 
 NEWS_MAX_NUM_PER_PAGE = 10
