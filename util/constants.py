@@ -56,7 +56,6 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "ต่างประเทศ" : "foreign",
     "bizweek" : "bizweek",
     "คุณภาพชีวิต-สังคม" : "life",
-    "จุดประกาย" : "judprakai",
     "ไลฟ์สไตล์" : "lifestyle",
     "ข่าวประชาสัมพันธ์" : "pr",
     "ข่าวพระราชสำนัก" : "royal",
