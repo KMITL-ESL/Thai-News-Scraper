@@ -51,8 +51,7 @@ class DailynewsAgency(Agency):
                 date_texts = list(map(lambda date_text: date_text.find(
                 'span', attrs={'class': 'elementor-post-date'}).text+' '+
                 date_text.find('span', attrs={'class': 'elementor-post-time'}).text, date_texts))
-                dates = list(
-                map(lambda date_text: self.parse_date(date_text), date_texts))
+                dates = list(map(lambda date_text: self.parse_date(date_text), date_texts))
                 links = list(map(lambda link: f'{link["href"]}', articles))
                 min_date = min(dates)
                 max_date = max(dates)
