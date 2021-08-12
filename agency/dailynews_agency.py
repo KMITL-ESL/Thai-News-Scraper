@@ -61,8 +61,8 @@ class DailynewsAgency(Agency):
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
                 tag = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'})
-                if soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip().find('การ์ตูน') == -1 and soup.find('h1',
-                attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip().find('รู้หรือไม่') == -1 and tag is not None:
+                if soup.find('h1',attrs={'class': 'elementor-heading-title elementor-size-default'
+                }).text.strip().find('รู้หรือไม่') == -1 and tag is not None and tag not in constants.TAG_DELETE_DAILYNEWS:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
