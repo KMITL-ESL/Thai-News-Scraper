@@ -62,8 +62,10 @@ class TheStandardAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
+                tag = soup.find('span', attrs={'class': 'category'}).text.strip()
+                tag = tag.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
                 if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', 
-                attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1:
+                attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1 and tag not in constants.TAG_DELETE_THESTANDARD:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
@@ -77,9 +79,8 @@ class TheStandardAgency(Agency):
             return
 
         logging.info(f'scrap {url}')
-
-        category = soup.find('span', attrs={'class': 'category'}).text.strip()
         try:
+            category = soup.find('span', attrs={'class': 'category'}).text.strip()
             category = category.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
         except:
             print("Something went wrong")

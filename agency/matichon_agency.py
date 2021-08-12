@@ -62,7 +62,7 @@ class MatichonAgency(Agency):
                 soup = await self.scrap_html(link)
                 tag = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
                 tag = tag[-1].text
-                if tag not in constants.TAG_DELETE:
+                if tag not in constants.TAG_DELETE_MATICHON:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:

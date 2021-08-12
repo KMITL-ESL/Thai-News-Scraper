@@ -74,7 +74,8 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
 
 TH_MATICHON_CATEGORY_MAPPER = {
     "เศรษฐกิจ" : "economy",
-    "การเมือง" : "politics",
+    "การศึกษา" : "education", "ศาสนา-วัฒนธรรม" : "education", "มุมบริการ" : "education",
+    "การเมือง" : "politics","รายงาน-วิเคราะห์" : "politics",
     "หุ้น-การเงิน" : "stock-finance",
     "ธุรกิจ" : "business",
     "ต่างประเทศ" : "foreign",
@@ -91,14 +92,16 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "ภาวะหุ้นรายวัน" : "daily-stock-markets",
     "ตลาดหุ้น" : "stock-markets",
     "ภูมิภาค" : "region",
-    "เกาะกระแสโซเชียล" : "social",
-    "บันเทิง" : "entertainment",
+    "เกาะกระแสโซเชียล" : "social", 
+    "บันเทิง" : "entertainment", "บันเทิงเทศ" : "entertainment","บันเทิงไทย" : "entertainment",
     "ชีวิตคุณภาพ" : "quality-life",
     "บทความ" : "article", "สถานีคิดเลขที่ 12" : "article", "เดินหน้าชน" : "article", "คุณภาพคือความอยู่รอด" : "article",
-    "เกาะติด Covid-19" : "covid19", "โควิด-ไทย" : "covid19",
+    "คอลัมน์หน้า 3 มติชน" : "article",
+    "เกาะติด Covid-19" : "covid19", "โควิด-ไทย" : "covid19","ด่วน โควิด 19" : "covid19",
     "กีฬา" : "sports", "เจาะลึกแดนอาทิตย์อุทัย" : "sports", "เกาะติดโตเกียวเกมส์" : "sports", "Sport Scoops" : "sports",
     "กีฬาต่างประเทศ" : "sports", "กีฬาในประเทศ" : "sports", "ฟุตบอลต่างประเทศ" : "sports", "ฟุตบอลในประเทศ" : "sports",
-    "Sport Slide" : "sports", "โตเกียวเกมส์" : "sports", "มวย" : "sports"
+    "Sport Slide" : "sports", "โตเกียวเกมส์" : "sports", "มวย" : "sports", "เกาะติดยูโร" : "sports", "ฟุตบอลยุโรป" : "sports",
+    "ยูโร2020" : "sports", "ฟุตบอลอังกฤษ" : "sports", "สกู๊ปยูโร2020" : "sports"
 }
 
 TH_MANGERONLINE_CATEGORY_MAPPER = {
@@ -118,6 +121,10 @@ TH_MANGERONLINE_CATEGORY_MAPPER = {
     "politics" : "politics",
 }
 
-TAG_DELETE = ['Hot Shot! อินแจแปน','คลิปลุยโตเกียว 2020','แฟชั่น']
+TAG_DELETE_MATICHON = ['Hot Shot! อินแจแปน','คลิปลุยโตเกียว 2020','แฟชั่น','เด่นวันนี้','การ์ตูนอรุณ วัชระสวัสดิ์',
+                        'ข่าวในพระราชสำนัก','Preview ประจำวัน','ประชาชื่น', 'สถานการณ์โลก','ปริทรรศน์โลก',
+                        'ข่าวประชาสัมพันธ์', 'แกลลอรียูโร2020','ภาพนำ','ปริทรรศน์โลก','Uncategorized']
+
+TAG_DELETE_THESTANDARD = ['เมธาพันธุ์วราทร','ไม่มีหมวดหมู่']
 
 NEWS_MAX_NUM_PER_PAGE = 10

@@ -110,6 +110,7 @@ agency:
      - https://www.matichon.co.th/columnists/ #หมวดใหม่
      - https://www.matichon.co.th/covid19/
      - https://www.matichon.co.th/sport/
+     - https://www.matichon.co.th/education/
   bkkbiznews:
     scheduler:
       - hour: 1
@@ -134,9 +135,11 @@ agency:
      - https://www.bangkokbiznews.com/sport/list/
      - https://www.bangkokbiznews.com/travel/list/
      - https://www.bangkokbiznews.com/social/list/
-     - https://www.bangkokbiznews.com/pr/it/
-     - https://www.bangkokbiznews.com/pr/health/
-     - https://www.bangkokbiznews.com/pr/finance/
+     - https://www.bangkokbiznews.com/environment/list/
+     - https://www.bangkokbiznews.com/education/list/
+     - https://www.bangkokbiznews.com/life-style/list/
+     - https://www.bangkokbiznews.com/judprakai-feature/list/
+     - https://www.bangkokbiznews.com/judprakai-health-green/list/
   the_standard:
     scheduler:
       - hour: 1
