@@ -79,10 +79,13 @@ class BkkbiznewsAgency(Agency):
         category = category[-1].text
         try:
             category = constants.TH_BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
+            tags = soup.find('meta', attrs={'name': 'keywords'})
+            tags = f'{tags["content"]}'.replace(' ', '')
         except:
             print("Something went wrong")
         finally:
             print(category)
+            print(tags)
         title = soup.find('h1', attrs={'class': 'section_title section_title_medium_var2'}).text.strip()
         date_text = soup_news.find('div', attrs={'class': 'event_date'}).text.strip()
         date = self.parse_date(date_text)
@@ -99,7 +102,8 @@ class BkkbiznewsAgency(Agency):
                              created_at=datetime.now(),
                              source='BANGKOKBIZNEWS',
                              link=url,
-                             category=category
+                             category=category,
+                             tags=tags
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:

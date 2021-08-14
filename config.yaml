@@ -111,6 +111,7 @@ agency:
      - https://www.matichon.co.th/covid19/
      - https://www.matichon.co.th/sport/
      - https://www.matichon.co.th/education/
+     - https://www.matichon.co.th/politics/
   bkkbiznews:
     scheduler:
       - hour: 1

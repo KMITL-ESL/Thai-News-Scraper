@@ -86,12 +86,19 @@ class MgronlineAgency(Agency):
         logging.info(date)
         content = soup_news.find('div', attrs={'class': 'article-content'}).text.strip()
         category = url.split("/")[3]
+        tags = soup.find('meta', attrs={'name': 'keywords'})
+        tags = f'{tags["content"]}'.split(',')
         try:
+            for item in constants.MANAGER_DELETE_TAGS:
+                tags.remove(item)
+                tags = ','.join(tags)
             category = constants.TH_MANGERONLINE_CATEGORY_MAPPER[category]
         except:
             print("Something went wrong")
+            tags = ','.join(tags)
         finally:
             print(category)
+            print(tags)
 
         return RawNewsEntity(publish_date=date,
                              title=title,
@@ -99,7 +106,8 @@ class MgronlineAgency(Agency):
                              created_at=datetime.now(),
                              source='MANAGERONLINE',
                              link=url,
-                             category=category
+                             category=category,
+                             tags=tags
                              )    
         
     async def scrap(self) -> List[RawNewsEntity]:

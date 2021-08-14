@@ -60,9 +60,9 @@ class MatichonAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
-                tag = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
-                tag = tag[-1].text
-                if tag not in constants.TAG_DELETE_MATICHON:
+                category_dl = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
+                category_dl = category_dl[-1].text
+                if category_dl not in constants.TAG_DELETE_MATICHON:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
@@ -80,12 +80,17 @@ class MatichonAgency(Agency):
 
         category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
         category = category[-1].text
+        tags = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
         try:
             category = constants.TH_MATICHON_CATEGORY_MAPPER[category]
+            tags = list(map(lambda tag: tag.text), tags)
+            tags = ','.join(tags)
         except:
             print("Something went wrong")
+            tags = tags[-1].text
         finally:
             print(category)
+            print(tags)
         title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
         date_text = soup.find('span', 
                     attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()
@@ -98,7 +103,8 @@ class MatichonAgency(Agency):
                              created_at=datetime.now(),
                              source='MATICHON',
                              link=url,
-                             category=category
+                             category=category,
+                             tags=tags
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:
