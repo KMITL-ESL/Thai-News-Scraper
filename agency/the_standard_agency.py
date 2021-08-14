@@ -62,10 +62,10 @@ class TheStandardAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
-                tag = soup.find('span', attrs={'class': 'category'}).text.strip()
-                tag = tag.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
+                category_dl = soup.find('span', attrs={'class': 'category'}).text.strip()
+                category_dl = category_dl.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
                 if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', 
-                attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1 and tag not in constants.TAG_DELETE_THESTANDARD:
+                attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1 and category_dl not in constants.TAG_DELETE_THESTANDARD:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
@@ -82,10 +82,13 @@ class TheStandardAgency(Agency):
         try:
             category = soup.find('span', attrs={'class': 'category'}).text.strip()
             category = category.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
+            tags = soup.find('meta', attrs={'name': 'Keywords'})
+            tags = f'{tags["content"]}'.replace(' ', '')
         except:
             print("Something went wrong")
         finally:
             print(category)
+            print(tags)
         title = soup.find('h1', attrs={'class': 'title'}).text.strip()
         date_text = soup.find('div', attrs={'class': 'meta-date'}).text.strip()
         date = self.parse_date(date_text)
@@ -98,7 +101,8 @@ class TheStandardAgency(Agency):
                              created_at=datetime.now(),
                              source='THE STANDARD',
                              link=url,
-                             category=category
+                             category=category,
+                             tags=tags
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:

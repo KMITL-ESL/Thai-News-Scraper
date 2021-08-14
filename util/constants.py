@@ -75,7 +75,7 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
 TH_MATICHON_CATEGORY_MAPPER = {
     "เศรษฐกิจ" : "economy",
     "การศึกษา" : "education", "ศาสนา-วัฒนธรรม" : "education", "มุมบริการ" : "education",
-    "การเมือง" : "politics","รายงาน-วิเคราะห์" : "politics",
+    "การเมือง" : "politics","รายงาน-วิเคราะห์" : "politics", "สัมภาษณ์พิเศษ" : "politics","เรียงคน/ภาพข่าวสังคม" : "politics",
     "หุ้น-การเงิน" : "stock-finance",
     "ธุรกิจ" : "business",
     "ต่างประเทศ" : "foreign",
@@ -123,10 +123,12 @@ TH_MANGERONLINE_CATEGORY_MAPPER = {
 
 TAG_DELETE_MATICHON = ['Hot Shot! อินแจแปน','คลิปลุยโตเกียว 2020','แฟชั่น','เด่นวันนี้','การ์ตูนอรุณ วัชระสวัสดิ์',
                         'ข่าวในพระราชสำนัก','Preview ประจำวัน','ประชาชื่น', 'สถานการณ์โลก','ปริทรรศน์โลก',
-                        'ข่าวประชาสัมพันธ์', 'แกลลอรียูโร2020','ภาพนำ','ปริทรรศน์โลก','Uncategorized']
+                        'ข่าวประชาสัมพันธ์', 'แกลลอรียูโร2020','ภาพนำ','ปริทรรศน์โลก','Uncategorized','การ์ตูนรุทธ์']
 
 TAG_DELETE_THESTANDARD = ['เมธาพันธุ์วราทร','ไม่มีหมวดหมู่']
 
 TAG_DELETE_DAILYNEWS = ['อื่นๆ','ก้อนเมฆเล่าเรื่อง','การ์ตูนขวด']
+
+MANAGER_DELETE_TAGS = ['MGRTOP7', 'MGROnline']
 
 NEWS_MAX_NUM_PER_PAGE = 10
