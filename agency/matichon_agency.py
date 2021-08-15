@@ -82,13 +82,14 @@ class MatichonAgency(Agency):
         category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
         category = category[-1].text
         tags = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
+        tags = list(map(lambda tag: tag.text, tags))
+        for item in constants.MATICHON_DELETE_TAGS:
+            tags.remove(item)
+            tags = ','.join(tags)
         try:
             category = constants.TH_MATICHON_CATEGORY_MAPPER[category]
-            tags = list(map(lambda tag: tag.text), tags)
-            tags = ','.join(tags)
         except:
             print("Something went wrong")
-            tags = tags[-1].text
         finally:
             print(category)
             print(tags)

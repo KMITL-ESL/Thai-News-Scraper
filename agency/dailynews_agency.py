@@ -38,7 +38,6 @@ class DailynewsAgency(Agency):
 
         all_links = set()
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-
             soup = await self.scrap_html(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
@@ -81,13 +80,12 @@ class DailynewsAgency(Agency):
 
         category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find('a',attrs={'class':'elementor-post-info__terms-list-item'}).text.strip()
         tags = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a',attrs={'class':'elementor-post-info__terms-list-item'})
+        tags = list(map(lambda tag: tag.text, tags))
+        tags = ','.join(tags)
         try:
             category = constants.TH_DAILYNEWS_CATEGORY_MAPPER[category]
-            tags = list(map(lambda tag: tag.text), tags)
-            tags = ','.join(tags)
         except:
             print("Something went wrong")
-            tags = tags[0].text
         finally:
             print(category)
             print(tags)

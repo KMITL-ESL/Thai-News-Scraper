@@ -131,4 +131,6 @@ TAG_DELETE_DAILYNEWS = ['อื่นๆ','ก้อนเมฆเล่าเ�
 
 MANAGER_DELETE_TAGS = ['MGRTOP7', 'MGROnline']
 
+MATICHON_DELETE_TAGS = ['หน้าแรก']
+
 NEWS_MAX_NUM_PER_PAGE = 10
