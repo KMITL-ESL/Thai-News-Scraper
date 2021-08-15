@@ -78,9 +78,13 @@ class BkkbiznewsAgency(Agency):
         category = soup.find('div', attrs={'class': 'col-sm-10 col-xs-5'}).find_all('span')
         category = category[-1].text
         try:
-            category = constants.TH_BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
             tags = soup.find('meta', attrs={'name': 'keywords'})
-            tags = f'{tags["content"]}'.replace(' ', '')
+            tags = f'{tags["content"]}'
+            if tags != '':
+                tags = tags.replace(' ', '')
+            else:
+                tags = category
+            category = constants.TH_BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
         except:
             print("Something went wrong")
         finally:
