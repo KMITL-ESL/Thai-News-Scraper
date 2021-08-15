@@ -60,9 +60,10 @@ class MatichonAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
+                title_dl = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
                 category_dl = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
                 category_dl = category_dl[-1].text
-                if category_dl not in constants.TAG_DELETE_MATICHON:
+                if category_dl not in constants.TAG_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
