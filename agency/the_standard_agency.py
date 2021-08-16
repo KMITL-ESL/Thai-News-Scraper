@@ -83,7 +83,8 @@ class TheStandardAgency(Agency):
             category = soup.find('span', attrs={'class': 'category'}).text.strip()
             category = category.split('/')[-1].lower().strip().replace(' ', '').replace('&','-')
             tags = soup.find('meta', attrs={'name': 'Keywords'})
-            tags = f'{tags["content"]}'.replace(' ', '')
+            tags = f'{tags["content"]}'.replace(' ', '').split(',')[:-1]
+            tags = ','.join(tags)
         except:
             print("Something went wrong")
         finally:
