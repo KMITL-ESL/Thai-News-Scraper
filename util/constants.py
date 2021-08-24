@@ -28,11 +28,11 @@ TH_FULL_MONTHS_MAPPER_MGR = {
     "ธ.ค.": 'December',
 }
 
-TH_DAILYNEWS_CATEGORY_MAPPER = {
+DAILYNEWS_CATEGORY_MAPPER = {
     "เศรษฐกิจ-ยานยนต์" : "economic","เศรษฐกิจจานร้อน" : "economic","มุมคนเมือง" : "economic","ป้ายแดงชวนขับ" : "economic",
     "รวมข่าวโควิด-19" : "economic", "ธุรกิจ" : "economic",
     "พาหนะคู่ใจ" : "economic","รู้ก่อนเหยียบ" : "economic",
-    "การเมือง" : "politics","ที่เห็นที่เป็นอยู่" : "politics","คอลัมนิสต์" : "politics","เลียบค่ายกองทัพ" : "politics",
+    "การเมือง" : "politics","ที่เห็นและเป็นอยู่" : "politics","คอลัมนิสต์" : "politics","เลียบค่ายกองทัพ" : "politics",
     "ตรวจการบ้าน" : "politics","ว่ายทวนน้ำ" : "politics",
     "เกษตร" : "agriculture",
     "ทั่วไทย-กทม." : "thailand","คนดีของสังคม" : "thailand","นิยายชีวิต" : "thailand","Special Report" : "thailand",
@@ -48,7 +48,7 @@ TH_DAILYNEWS_CATEGORY_MAPPER = {
     "ที่นี่จากยูเอสเอ" : "foreign","คนไทยในออสเตรเลีย" : "foreign"
 }
 
-TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
+BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "เศรษฐกิจ" : "economic",
     "การเมือง" : "politics",
     "การเงิน-การลงทุน" : "finance",
@@ -72,7 +72,7 @@ TH_BANGKOKBIZNEWS_CATEGORY_MAPPER = {
     "อสังหาริมทรัพย์" : "property",
 }
 
-TH_MATICHON_CATEGORY_MAPPER = {
+MATICHON_CATEGORY_MAPPER = {
     "เศรษฐกิจ" : "economy",
     "การศึกษา" : "education", "ศาสนา-วัฒนธรรม" : "education", "มุมบริการ" : "education",
     "การเมือง" : "politics","รายงาน-วิเคราะห์" : "politics", "สัมภาษณ์พิเศษ" : "politics","เรียงคน/ภาพข่าวสังคม" : "politics",
@@ -93,7 +93,7 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "ตลาดหุ้น" : "stock-markets",
     "ภูมิภาค" : "region",
     "เกาะกระแสโซเชียล" : "social", 
-    "บันเทิง" : "entertainment", "บันเทิงเทศ" : "entertainment","บันเทิงไทย" : "entertainment",
+    "บันเทิง" : "entertainment", "บันเทิงเทศ" : "entertainment","บันเทิงไทย" : "entertainment", 'ศิลปะและวัฒนธรรม' : "entertainment",
     "ชีวิตคุณภาพ" : "quality-life",
     "บทความ" : "article", "สถานีคิดเลขที่ 12" : "article", "เดินหน้าชน" : "article", "คุณภาพคือความอยู่รอด" : "article",
     "คอลัมน์หน้า 3 มติชน" : "article",
@@ -104,7 +104,7 @@ TH_MATICHON_CATEGORY_MAPPER = {
     "ยูโร2020" : "sports", "ฟุตบอลอังกฤษ" : "sports", "สกู๊ปยูโร2020" : "sports"
 }
 
-TH_MANGERONLINE_CATEGORY_MAPPER = {
+MANGERONLINE_CATEGORY_MAPPER = {
     "qol" : "quality-life",
     "around" : "foreign",
     "crime" : "crime",
@@ -121,13 +121,14 @@ TH_MANGERONLINE_CATEGORY_MAPPER = {
     "politics" : "politics",
 }
 
-TAG_DELETE_MATICHON = ['Hot Shot! อินแจแปน','คลิปลุยโตเกียว 2020','แฟชั่น','เด่นวันนี้','การ์ตูนอรุณ วัชระสวัสดิ์',
+CATEGORY_DELETE_MATICHON = ['Hot Shot! อินแจแปน','คลิปลุยโตเกียว 2020','แฟชั่น','เด่นวันนี้','การ์ตูนอรุณ วัชระสวัสดิ์',
                         'ข่าวในพระราชสำนัก','Preview ประจำวัน','ประชาชื่น', 'สถานการณ์โลก','ปริทรรศน์โลก',
-                        'ข่าวประชาสัมพันธ์', 'แกลลอรียูโร2020','ภาพนำ','ปริทรรศน์โลก','Uncategorized','การ์ตูนรุทธ์']
+                        'ข่าวประชาสัมพันธ์', 'แกลลอรียูโร2020','ภาพนำ','ปริทรรศน์โลก','Uncategorized','การ์ตูนรุทธ์','วงวรรณกรรม',
+                        'คลิปรายการ','ชโลทร','แวดวงหนังสือ']
 
-TAG_DELETE_THESTANDARD = ['เมธาพันธุ์วราทร','ไม่มีหมวดหมู่']
+CATEGORY_DELETE_THESTANDARD = ['เมธาพันธุ์วราทร','ไม่มีหมวดหมู่']
 
-TAG_DELETE_DAILYNEWS = ['อื่นๆ','ก้อนเมฆเล่าเรื่อง','การ์ตูนขวด']
+CATEGORY_DELETE_DAILYNEWS = ['อื่นๆ','ก้อนเมฆเล่าเรื่อง','การ์ตูนขวด']
 
 MANAGER_DELETE_TAGS = ['MGRTOP7', 'MGROnline']
 

@@ -89,16 +89,16 @@ class MgronlineAgency(Agency):
         tags = soup.find('meta', attrs={'name': 'keywords'})
         tags = f'{tags["content"]}'.split(',')
         try:
-            category = constants.TH_MANGERONLINE_CATEGORY_MAPPER[category]
+            category = constants.MANGERONLINE_CATEGORY_MAPPER[category]
             for item in constants.MANAGER_DELETE_TAGS:
                 tags.remove(item)
                 tags = ','.join(tags)
         except:
-            print("Something went wrong")
+            logging.info(f'Something went wrong')
             tags = ','.join(tags)
         finally:
-            print(category)
-            print(tags)
+            logging.info(f'{category}')
+            logging.info(f'{tags}')
 
         return RawNewsEntity(publish_date=date,
                              title=title,

@@ -60,10 +60,14 @@ class MatichonAgency(Agency):
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
-                title_dl = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
-                category_dl = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
+                try:
+                    category_dl = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
+                    title_dl = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
+                except:
+                    logging.info(f'Error : {link}')
+                    continue
                 category_dl = category_dl[-1].text
-                if category_dl not in constants.TAG_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1:
+                if category_dl not in constants.CATEGORY_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
@@ -87,12 +91,12 @@ class MatichonAgency(Agency):
             tags.remove(item)
             tags = ','.join(tags)
         try:
-            category = constants.TH_MATICHON_CATEGORY_MAPPER[category]
+            category = constants.MATICHON_CATEGORY_MAPPER[category]
         except:
-            print("Something went wrong")
+            logging.info(f'Something went wrong')
         finally:
-            print(category)
-            print(tags)
+            logging.info(f'{category}')
+            logging.info(f'{tags}')
         title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
         date_text = soup.find('span', 
                     attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()

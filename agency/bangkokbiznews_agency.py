@@ -84,12 +84,12 @@ class BkkbiznewsAgency(Agency):
                 tags = tags.replace(' ', '')
             else:
                 tags = category
-            category = constants.TH_BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
+            category = constants.BANGKOKBIZNEWS_CATEGORY_MAPPER[category]
         except:
-            print("Something went wrong")
+            logging.info(f'Something went wrong')
         finally:
-            print(category)
-            print(tags)
+            logging.info(f'{category}')
+            logging.info(f'{tags}')
         title = soup.find('h1', attrs={'class': 'section_title section_title_medium_var2'}).text.strip()
         date_text = soup_news.find('div', attrs={'class': 'event_date'}).text.strip()
         date = self.parse_date(date_text)
