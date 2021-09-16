@@ -84,7 +84,8 @@ class MgronlineAgency(Agency):
         date_text = soup_news.find('time').text.strip()
         date = self.parse_date(date_text)
         logging.info(date)
-        content = soup_news.find('div', attrs={'class': 'article-content'}).text.strip()
+        content = soup_news.find('div', attrs={'class': 'article-content'})
+        content = str(content).replace('<div class="article-content">\n<div class="m-detail-container"> <div class="detail m-c-font-article">\r\n', '').replace('<br> </br></div>\n</div> </div>', '').replace('<br/><br/>', ' ').strip()
         category = url.split("/")[3]
         tags = soup.find('meta', attrs={'name': 'keywords'})
         tags = f'{tags["content"]}'.split(',')
