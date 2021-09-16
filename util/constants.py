@@ -93,7 +93,7 @@ MATICHON_CATEGORY_MAPPER = {
     "ตลาดหุ้น" : "stock-markets",
     "ภูมิภาค" : "region",
     "เกาะกระแสโซเชียล" : "social", 
-    "บันเทิง" : "entertainment", "บันเทิงเทศ" : "entertainment","บันเทิงไทย" : "entertainment", 'ศิลปะและวัฒนธรรม' : "entertainment",
+    "บันเทิง" : "entertainment", "บันเทิงเทศ" : "entertainment","บันเทิงไทย" : "entertainment", 'ศิลปะและวัฒนธรรม' : "entertainment", "วิจารณ์บันเทิง" : "entertainment",
     "ชีวิตคุณภาพ" : "quality-life",
     "บทความ" : "article", "สถานีคิดเลขที่ 12" : "article", "เดินหน้าชน" : "article", "คุณภาพคือความอยู่รอด" : "article",
     "คอลัมน์หน้า 3 มติชน" : "article",
