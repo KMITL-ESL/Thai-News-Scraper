@@ -114,13 +114,31 @@ agency:
      - https://www.matichon.co.th/politics/
   bkkbiznews:
     scheduler:
-      - hour: 1
+      - hour: 0
+        minute: 0
+      - hour: 2
+        minute: 0
+      - hour: 4
         minute: 0
       - hour: 6
-        minute: 15
-      - hour: 15
-        minute: 10
-    since_datedelta: 2
+        minute: 0
+      - hour: 8
+        minute: 0
+      - hour: 10
+        minute: 0
+      - hour: 12
+        minute: 0
+      - hour: 14
+        minute: 0
+      - hour: 16
+        minute: 0
+      - hour: 18
+        minute: 0
+      - hour: 20
+        minute: 0
+      - hour: 22
+        minute: 0
+    since_datedelta: 0
     max_news_per_batch: 1000
     indexes_bkkbiznews:
      - https://www.bangkokbiznews.com/business/list/

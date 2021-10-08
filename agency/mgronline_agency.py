@@ -37,6 +37,19 @@ class MgronlineAgency(Agency):
         date_text = date_text.replace(':', '.')
         date = datetime.strptime(date_text, r'%Y %m %d %H.%M.%S')
         return date
+    
+    def deleteHTML(self, inp: str) -> str:
+        ls = []
+        inp = list(inp)
+        found = False
+        for i in inp:
+            if i == '<' and not found:
+                found = True
+            elif i == '>' and found:
+                found = False
+            if not found and i != '>':
+                ls.append(i)
+        return ''.join(ls)
         
     async def scrap_links(self, index_url, from_date, to_date, max_news):
 
@@ -84,8 +97,16 @@ class MgronlineAgency(Agency):
         date_text = soup_news.find('time').text.strip()
         date = self.parse_date(date_text)
         logging.info(date)
-        content = soup_news.find('div', attrs={'class': 'article-content'})
-        content = str(content).replace('<div class="article-content">\n<div class="m-detail-container"> <div class="detail m-c-font-article">\r\n', '').replace('<br> </br></div>\n</div> </div>', '').replace('<br/><br/>', ' ').strip()
+        try:
+            content = soup.find('div', attrs={'class': 'col-sm-7 col-md-8'}).find('div', attrs={'class': 'article-content'})
+            content = content.find('div', attrs={'class': 'detail'})
+            content = str(content).replace('<div class="detail m-c-font-article">', '').replace('</div>', '').replace('<br/><br/>', ' ').replace('<br/>', ' ').replace('<br> </br>', ' ')
+            content = content.replace('<b>', '').replace('</b>', '').replace('<br/>', ' ').strip()
+            content = self.deleteHTML(content)
+        except:
+            print('Something went wrong')
+        finally:
+            print(content)
         category = url.split("/")[3]
         tags = soup.find('meta', attrs={'name': 'keywords'})
         tags = f'{tags["content"]}'.split(',')
