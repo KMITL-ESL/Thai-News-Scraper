@@ -63,7 +63,6 @@ class BkkbiznewsAgency(Agency):
                     logging.info(link)
             if min_date < from_date:
                 break
-
         return all_links
 
     async def call(self, url) -> RawNewsEntity:
