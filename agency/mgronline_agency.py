@@ -70,7 +70,7 @@ class MgronlineAgency(Agency):
                 max_date = max(dates)
                 links = list(map(lambda link: f'{link["href"]}', articles))
             except:
-                break
+                continue
             
             for date, link in zip(dates, links):
                 if soup.find_all('time', attrs={'class':'p-date-time-item'}) is not None and soup.find_all('a',attrs={'class':'link'}, href=True) is not None:

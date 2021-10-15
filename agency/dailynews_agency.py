@@ -55,7 +55,7 @@ class DailynewsAgency(Agency):
                 min_date = min(dates)
                 max_date = max(dates)
             except:
-                break
+                continue
             
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
