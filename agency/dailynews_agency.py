@@ -82,6 +82,13 @@ class DailynewsAgency(Agency):
 
         logging.info(f'scrap {url}')
 
+        title = soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()
+        date_text = soup.find('span', 
+                    attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
+                    attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-time'}).text.strip()
+        date = self.parse_date(date_text)
+        content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
+                  }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
         category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find('a',attrs={'class':'elementor-post-info__terms-list-item'}).text.strip()
         tags = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a',attrs={'class':'elementor-post-info__terms-list-item'})
         tags = list(map(lambda tag: tag.text, tags))
@@ -91,15 +98,9 @@ class DailynewsAgency(Agency):
         except:
             logging.info(f'Something went wrong')
         finally:
+            logging.info(f'{date}')
             logging.info(f'{category}')
             logging.info(f'{tags}')
-        title = soup.find('h1', attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()
-        date_text = soup.find('span', 
-                    attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
-                    attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-time'}).text.strip()
-        date = self.parse_date(date_text)
-        content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
-                  }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
 
         return RawNewsEntity(publish_date=date,
                              title=title,

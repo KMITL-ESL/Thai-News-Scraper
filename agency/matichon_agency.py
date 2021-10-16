@@ -83,6 +83,11 @@ class MatichonAgency(Agency):
 
         logging.info(f'scrap {url}')
 
+        title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
+        date_text = soup.find('span', 
+                    attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()
+        date = self.parse_date(date_text)
+        content = soup.find('div', attrs={'class': 'td-post-content'}).text.strip()
         category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
         category = category[-1].text
         tags = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
@@ -95,13 +100,9 @@ class MatichonAgency(Agency):
         except:
             logging.info(f'Something went wrong')
         finally:
+            logging.info(f'{date}')
             logging.info(f'{category}')
             logging.info(f'{tags}')
-        title = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
-        date_text = soup.find('span', 
-                    attrs={'class': 'td-post-date td-post-date-no-dot'}).text.strip()
-        date = self.parse_date(date_text)
-        content = soup.find('div', attrs={'class': 'td-post-content'}).text.strip()
 
         return RawNewsEntity(publish_date=date,
                              title=title,
