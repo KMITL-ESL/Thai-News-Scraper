@@ -70,7 +70,7 @@ class MgronlineAgency(Agency):
                 max_date = max(dates)
                 links = list(map(lambda link: f'{link["href"]}', articles))
             except:
-                break
+                continue
             
             for date, link in zip(dates, links):
                 if soup.find_all('time', attrs={'class':'p-date-time-item'}) is not None and soup.find_all('a',attrs={'class':'link'}, href=True) is not None:
@@ -104,9 +104,9 @@ class MgronlineAgency(Agency):
             content = content.replace('<b>', '').replace('</b>', '').replace('<br/>', ' ').strip()
             content = self.deleteHTML(content)
         except:
-            print('Something went wrong')
-        finally:
-            print(content)
+            logging.info(f'error : content')
+        # finally:
+        #     print(content)
         category = url.split("/")[3]
         tags = soup.find('meta', attrs={'name': 'keywords'})
         tags = f'{tags["content"]}'.split(',')
@@ -116,8 +116,8 @@ class MgronlineAgency(Agency):
                 tags.remove(item)
                 tags = ','.join(tags)
         except:
-            logging.info(f'Something went wrong')
             tags = ','.join(tags)
+            logging.info(f'normal-tags: {tags}')
         finally:
             logging.info(f'{category}')
             logging.info(f'{tags}')

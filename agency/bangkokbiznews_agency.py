@@ -54,7 +54,7 @@ class BkkbiznewsAgency(Agency):
                 max_date = max(dates)
                 links = list(map(lambda link: f'{link["href"]}', articles))
             except:
-                break
+                continue
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)

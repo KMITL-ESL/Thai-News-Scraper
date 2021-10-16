@@ -58,7 +58,7 @@ class TheStandardAgency(Agency):
                 max_date = max(dates)
                 links = list(map(lambda link: f'{link["href"]}', articles))
             except:
-                break
+                continue
 
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link) 
@@ -83,6 +83,11 @@ class TheStandardAgency(Agency):
             return
 
         logging.info(f'scrap {url}')
+        title = soup.find('h1', attrs={'class': 'title'}).text.strip()
+        date_text = soup.find('div', attrs={'class': 'meta-date'}).text.strip()
+        date = self.parse_date(date_text)
+        content = soup.find('div', attrs={'class': 'col-sm-9 fix-sticky'
+                  }).find('div', attrs={'class': 'entry-content'}).text.strip()
         tags = soup.find('meta', attrs={'name': 'Keywords'})
         tags = f'{tags["content"]}'.replace(' ', '').split(',')[:-1]
         tags = ','.join(tags)
@@ -92,13 +97,9 @@ class TheStandardAgency(Agency):
         except:
             logging.info(f'Something went wrong')
         finally:
+            logging.info(f'{date}')
             logging.info(f'{category}')
             logging.info(f'{tags}')
-        title = soup.find('h1', attrs={'class': 'title'}).text.strip()
-        date_text = soup.find('div', attrs={'class': 'meta-date'}).text.strip()
-        date = self.parse_date(date_text)
-        content = soup.find('div', attrs={'class': 'col-sm-9 fix-sticky'
-                  }).find('div', attrs={'class': 'entry-content'}).text.strip()
 
         return RawNewsEntity(publish_date=date,
                              title=title,
