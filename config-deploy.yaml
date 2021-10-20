@@ -178,6 +178,12 @@ agency:
      - https://thestandard.co/category/news/sport/
      - https://thestandard.co/category/news/environment/
      - https://thestandard.co/category/news/science/
+     - https://thestandard.co/category/culture/music/
+     - https://thestandard.co/category/lifestyle/wellness/
+     - https://thestandard.co/category/lifestyle/travel/
+     - https://thestandard.co/category/lifestyle/eat-drink/
+     - https://thestandard.co/category/news/china/
+     - https://thestandard.co/category/wealth/wealth-cryptocurrency/
 outbound:
   post_news: http://news-classification:80/api/news
   drop_news: http://news-classification:80/api/news

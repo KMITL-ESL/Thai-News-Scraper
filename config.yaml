@@ -160,6 +160,13 @@ agency:
      - https://thestandard.co/category/news/sport/
      - https://thestandard.co/category/news/environment/
      - https://thestandard.co/category/news/science/
+     - https://thestandard.co/category/culture/music/ #ต้องดึงย้อน
+     - https://thestandard.co/category/lifestyle/wellness/ #ต้องดึงย้อน
+     - https://thestandard.co/category/lifestyle/travel/ #ต้องดึงย้อน
+     - https://thestandard.co/category/lifestyle/living/ #ต้องดึงย้อน
+     - https://thestandard.co/category/lifestyle/eat-drink/ #ต้องดึงย้อน
+     - https://thestandard.co/category/news/china/ #ต้องดึงย้อน
+     - https://thestandard.co/category/wealth/wealth-cryptocurrency/ #ต้องดึงย้อน
 outbound:
   post_news: http://localhost:8080/api/news
   drop_news: http://localhost:8080/api/news
