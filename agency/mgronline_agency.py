@@ -42,13 +42,18 @@ class MgronlineAgency(Agency):
         ls = []
         inp = list(inp)
         found = False
-        for i in inp:
-            if i == '<' and not found:
+        isScript = False
+        for i in range(len(inp)):
+            if inp[i] == '<' and not found:
+                if ''.join(inp[i + 1: i + 7]) == 'script':
+                    isScript = True
                 found = True
-            elif i == '>' and found:
+            elif inp[i] == '>' and found and not isScript:
                 found = False
-            if not found and i != '>':
-                ls.append(i)
+            elif inp[i] == '>' and found and isScript:
+                isScript = False
+            if not found and inp[i] != '>':
+                ls.append(inp[i])
         return ''.join(ls)
         
     async def scrap_links(self, index_url, from_date, to_date, max_news):
@@ -96,22 +101,27 @@ class MgronlineAgency(Agency):
         title = soup_news.find('h1').text.strip()
         date_text = soup_news.find('time').text.strip()
         date = self.parse_date(date_text)
-        logging.info(date)
         try:
-            content = soup.find('div', attrs={'class': 'col-sm-7 col-md-8'}).find('div', attrs={'class': 'article-content'})
-            content = content.find('div', attrs={'class': 'detail'})
-            content = str(content).replace('<div class="detail m-c-font-article">', '').replace('</div>', '').replace('<br/><br/>', ' ').replace('<br/>', ' ').replace('<br> </br>', ' ')
-            content = content.replace('<b>', '').replace('</b>', '').replace('<br/>', ' ').strip()
-            content = self.deleteHTML(content)
+            content = soup.find('div', attrs={'class': 'article-content'})
+            content = content.find('div', attrs={'class': 'detail m-c-font-article'})
+            content = str(content).replace('<br/>', '\n')
+            content = self.deleteHTML(content).split('\n')
+            content = list(map(lambda a: a.strip(), content))
+            while '' in content:
+                content.remove('')
+            content = '\n'.join(content)
         except:
             logging.info(f'error : content')
-        # finally:
-        #     print(content)
         category = url.split("/")[3]
         tags = soup.find('meta', attrs={'name': 'keywords'})
         tags = f'{tags["content"]}'.split(',')
         try:
             category = constants.MANGERONLINE_CATEGORY_MAPPER[category]
+            sub_category = soup.find('div', attrs={'class': 'breadcrumb-container'})
+            sub_category = sub_category.find_all('li')
+            sub_category = list(map(lambda s: s.text.strip(), sub_category))
+            sub_category = sub_category[2:]
+            sub_category = ','.join(sub_category)
             for item in constants.MANAGER_DELETE_TAGS:
                 tags.remove(item)
                 tags = ','.join(tags)
@@ -120,6 +130,9 @@ class MgronlineAgency(Agency):
             logging.info(f'normal-tags: {tags}')
         finally:
             logging.info(f'{category}')
+            if sub_category == '':
+                sub_category = None
+            logging.info(f'{sub_category}')
             logging.info(f'{tags}')
 
         return RawNewsEntity(publish_date=date,
@@ -129,7 +142,8 @@ class MgronlineAgency(Agency):
                              source='MANAGERONLINE',
                              link=url,
                              category=category,
-                             tags=tags
+                             tags=tags,
+                             sub_category=sub_category
                              )    
         
     async def scrap(self) -> List[RawNewsEntity]:

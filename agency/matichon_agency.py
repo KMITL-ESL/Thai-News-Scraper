@@ -90,19 +90,26 @@ class MatichonAgency(Agency):
         content = soup.find('div', attrs={'class': 'td-post-content'}).text.strip()
         category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
         category = category[-1].text
-        tags = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
-        tags = list(map(lambda tag: tag.text, tags))
-        for item in constants.MATICHON_DELETE_TAGS:
-            tags.remove(item)
-            tags = ','.join(tags)
+        sub_category = soup.find('div', attrs={'class': 'entry-crumbs'})
         try:
             category = constants.MATICHON_CATEGORY_MAPPER[category]
+            content = content.split('\n')
+            content = list(map(lambda a: a.strip(), content))
+            while '' in content:
+                content.remove('')
+            content = '\n'.join(content)
+            sub_category = sub_category.find_all('span')
+            sub_category = list(map(lambda s: s.text.strip(), sub_category))
+            sub_category = sub_category[2:-1]
+            sub_category = ','.join(sub_category)
+            tags = None
         except:
             logging.info(f'Something went wrong')
         finally:
-            logging.info(f'{date}')
             logging.info(f'{category}')
-            logging.info(f'{tags}')
+            if sub_category == '':
+                sub_category = None
+            logging.info(f'{sub_category}')
 
         return RawNewsEntity(publish_date=date,
                              title=title,
@@ -111,7 +118,8 @@ class MatichonAgency(Agency):
                              source='MATICHON',
                              link=url,
                              category=category,
-                             tags=tags
+                             tags=tags,
+                             sub_category=sub_category
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:

@@ -88,17 +88,29 @@ class TheStandardAgency(Agency):
         date = self.parse_date(date_text)
         content = soup.find('div', attrs={'class': 'col-sm-9 fix-sticky'
                   }).find('div', attrs={'class': 'entry-content'}).text.strip()
-        tags = soup.find('meta', attrs={'name': 'Keywords'})
-        tags = f'{tags["content"]}'.replace(' ', '').split(',')[:-1]
-        tags = ','.join(tags)
         try:
             category = soup.find('span', attrs={'class': 'category'}).text.strip()
             category = category.split('/')[0].lower().strip().replace(' ', '').replace('&','-')
+            content = content.split('\n')
+            content = list(map(lambda a: a.strip(), content))
+            while '' in content:
+                content.remove('')
+            content = '\n'.join(content)
+            sub_category = soup.find('div', attrs={'class': 'entry-meta'})
+            sub_category = sub_category.find_all('a')
+            sub_category = list(map(lambda s: s.text.strip(), sub_category))
+            sub_category = sub_category[1:]
+            sub_category = ','.join(sub_category)
+            tags = soup.find('meta', attrs={'name': 'Keywords'})
+            tags = f'{tags["content"]}'.replace(' ', '').split(',')[:-1]
+            tags = ','.join(tags)
         except:
             logging.info(f'Something went wrong')
         finally:
-            logging.info(f'{date}')
             logging.info(f'{category}')
+            if sub_category == '':
+                sub_category = None
+            logging.info(f'{sub_category}')
             logging.info(f'{tags}')
 
         return RawNewsEntity(publish_date=date,
@@ -108,7 +120,8 @@ class TheStandardAgency(Agency):
                              source='THE STANDARD',
                              link=url,
                              category=category,
-                             tags=tags
+                             tags=tags,
+                             sub_category=sub_category
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:
