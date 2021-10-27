@@ -90,17 +90,21 @@ class DailynewsAgency(Agency):
         content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
                   }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
         category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find('a',attrs={'class':'elementor-post-info__terms-list-item'}).text.strip()
-        tags = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a',attrs={'class':'elementor-post-info__terms-list-item'})
-        tags = list(map(lambda tag: tag.text, tags))
-        tags = ','.join(tags)
         try:
             category = constants.DAILYNEWS_CATEGORY_MAPPER[category]
+            sub_category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'})
+            sub_category = sub_category.find_all('a')
+            sub_category = list(map(lambda s: s.text.strip(), sub_category))
+            sub_category = sub_category[1:]
+            sub_category = ','.join(sub_category)
+            tags = None
         except:
             logging.info(f'Something went wrong')
         finally:
-            logging.info(f'{date}')
             logging.info(f'{category}')
-            logging.info(f'{tags}')
+            if sub_category == '':
+                sub_category = None
+            logging.info(f'{sub_category}')
 
         return RawNewsEntity(publish_date=date,
                              title=title,
@@ -109,7 +113,8 @@ class DailynewsAgency(Agency):
                              source='DAILYNEWS',
                              link=url,
                              category=category,
-                             tags=tags
+                             tags=tags,
+                             sub_category = sub_category
                              )
 
     async def scrap(self) -> List[RawNewsEntity]:

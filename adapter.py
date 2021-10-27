@@ -19,7 +19,8 @@ async def publish_raw_news(entity: RawNewsEntity):
             'source': entity.source,
             'link': entity.link,
             'category' : entity.category,
-            'tags' : entity.tags
+            'tags' : entity.tags,
+            'sub_category' : entity.sub_category
         }
         async with session.post(url, data=json.dumps(request_body)) as res:
             return await res.json()
