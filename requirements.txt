@@ -37,7 +37,7 @@ mistune==0.8.4
 multidict==5.1.0
 nbclient==0.5.1
 nbconvert==6.0.7
-nest-asyncio==1.4.3
+nest-asyncio==1.5.1
 notebook==6.2.0
 orjson==3.5.1
 packaging==20.8
