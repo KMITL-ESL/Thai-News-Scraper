@@ -67,7 +67,7 @@ class TheStandardAgency(Agency):
                 except:
                     logging.info(f'Error : {link}')
                     continue
-                category_dl = category_dl.split('/')[0].lower().strip().replace(' ', '').replace('&','-')
+                category_dl = category_dl.split('/')[0]
                 if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', 
                 attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1 and category_dl not in constants.CATEGORY_DELETE_THESTANDARD:
                     all_links.add(link)

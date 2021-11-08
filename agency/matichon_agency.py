@@ -89,7 +89,7 @@ class MatichonAgency(Agency):
         date = self.parse_date(date_text)
         content = soup.find('div', attrs={'class': 'td-post-content'}).text.strip()
         category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
-        category = category[-1].text
+        category = category[1].text
         sub_category = soup.find('div', attrs={'class': 'entry-crumbs'})
         try:
             category = constants.MATICHON_CATEGORY_MAPPER[category]

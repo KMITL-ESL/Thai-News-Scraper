@@ -112,6 +112,7 @@ class MgronlineAgency(Agency):
             content = '\n'.join(content)
         except:
             logging.info(f'error : content')
+            
         category = url.split("/")[3]
         tags = soup.find('meta', attrs={'name': 'keywords'})
         tags = f'{tags["content"]}'.split(',')
