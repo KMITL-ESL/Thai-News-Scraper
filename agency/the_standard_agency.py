@@ -63,11 +63,11 @@ class TheStandardAgency(Agency):
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link) 
                 try:
-                    category_dl = soup.find('span', attrs={'class': 'category'}).text.strip()
+                    category_dl = soup.find('span', attrs={'class': 'category'}).text
+                    category_dl = category_dl.split('/')[0].strip()
                 except:
                     logging.info(f'Error : {link}')
                     continue
-                category_dl = category_dl.split('/')[0]
                 if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', 
                 attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1 and category_dl not in constants.CATEGORY_DELETE_THESTANDARD:
                     all_links.add(link)
