@@ -87,7 +87,7 @@ class DailynewsAgency(Agency):
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-time'}).text.strip()
         date = self.parse_date(date_text)
-        content = soup.find('div', attrs={'class': 'elementor-element elementor-element-31c4a6f post-content elementor-widget elementor-widget-theme-post-content'
+        content = soup.find('div', attrs={'data-widget_type': 'theme-post-content.default'
                   }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
         category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find('a',attrs={'class':'elementor-post-info__terms-list-item'}).text.strip()
         try:

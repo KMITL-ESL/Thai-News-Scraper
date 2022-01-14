@@ -24,7 +24,7 @@ agency:
     - https://www.dailynews.co.th/news/news_group/การศึกษา-ไอที/
     - https://www.dailynews.co.th/news/news_group/อื่นๆ/ #หมวดใหม่
     - https://www.dailynews.co.th/news/news_group/บันเทิง/ #หมวดใหม่
-    - https://www.dailynews.co.th/news/news_group/กีฬา/ #หมวดใหม่
+    - https://www.dailynews.co.th/news/news_group/sport/ #หมวดใหม่
     - https://www.dailynews.co.th/news/news_group/การเมือง/ #หมวดใหม่
     - https://www.dailynews.co.th/news/news_group/อาชญากรรม/ #หมวดใหม่
     - https://www.dailynews.co.th/news/news_group/ทั่วไทย-กทม/ #หมวดใหม่
@@ -40,6 +40,11 @@ agency:
     max_news_per_batch: 1000
     indexes_mgronline:
      - https://mgronline.com/stockmarket/4920/ #หุ้น-Cryptocurrency
+     - https://mgronline.com/stockmarket/4462/4458/
+     - https://mgronline.com/stockmarket/4918/
+     - https://mgronline.com/stockmarket/4461/4454/
+     - https://mgronline.com/stockmarket/4904/
+     - https://mgronline.com/stockmarket/4914/
      - https://mgronline.com/science/5516/5528/ #วิทยาศาสตร์-นวตกรรม-สิ่งประดิษฐ์โทคโนฯ
      - https://mgronline.com/science/5504/5530/ #วิทยาศาสตร์-อวกาศ-เทคโนโลยีอวกาศ
      - https://mgronline.com/business/4450/4401/ #เศรษฐกิจ-ธุรกิจ การค้า-อุตสาหกรรม-คมนาคม อุตสาหกรรม-พลังงาน
@@ -83,6 +88,29 @@ agency:
      - https://mgronline.com/qol/8503/
      - https://mgronline.com/qol/8504/
      - https://mgronline.com/qol/8506/
+     - https://mgronline.com/smes/4524/
+     - https://mgronline.com/travel/7501/
+     - https://mgronline.com/entertainment/2903/
+     - https://mgronline.com/entertainment/2200/
+     - https://mgronline.com/entertainment/2926/
+     - https://mgronline.com/entertainment/2100/
+     - https://mgronline.com/entertainment/2608/
+     - https://mgronline.com/game/9417/
+     - https://mgronline.com/game/9404/
+     - https://mgronline.com/game/9409/
+     - https://mgronline.com/game/9405/
+     - https://mgronline.com/game/9411/
+     - https://mgronline.com/game/9401/
+     - https://mgronline.com/game/9400/
+     - https://mgronline.com/drama/2947/2801/
+     - https://mgronline.com/drama/2947/2810/
+     - https://mgronline.com/china/6531/7056/
+     - https://mgronline.com/china/6531/7055/
+     - https://mgronline.com/china/6531/7057/
+     - https://mgronline.com/china/6531/7054/
+     - https://mgronline.com/south/1223/
+     - https://mgronline.com/south/1225/
+     - https://mgronline.com/south/1234/
   matichon:
     scheduler:
       - hour: 1
