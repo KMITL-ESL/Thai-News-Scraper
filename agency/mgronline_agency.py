@@ -78,7 +78,15 @@ class MgronlineAgency(Agency):
                 continue
             
             for date, link in zip(dates, links):
-                if soup.find_all('time', attrs={'class':'p-date-time-item'}) is not None and soup.find_all('a',attrs={'class':'link'}, href=True) is not None:
+                try:
+                    soup = await self.scrap_html(link)
+                    title = soup.find('header', attrs={'class': 'header-article'}).find('h1').text.strip()
+                    date_text = soup.find('time').text.strip()
+                except:
+                    logging.info(f'Error : {link}')
+                    continue
+                if soup.find_all('time', attrs={'class':'p-date-time-item'}) is not None and soup.find_all('a',
+                attrs={'class':'link'}, href=True) is not None and title.find('คลิป') == -1 and title.find('ภาพ') == -1:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
@@ -97,8 +105,7 @@ class MgronlineAgency(Agency):
             logging.error(f'failed info page')
             return
         soup_news = soup.find('div', attrs={'class': 'col-sm-7 col-md-8'})
-        title = soup_news.find('header', attrs={'class': 'header-article'})
-        title = soup_news.find('h1').text.strip()
+        title = soup_news.find('header', attrs={'class': 'header-article'}).find('h1').text.strip()
         date_text = soup_news.find('time').text.strip()
         date = self.parse_date(date_text)
         try:
