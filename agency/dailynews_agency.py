@@ -60,13 +60,13 @@ class DailynewsAgency(Agency):
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
                 try:
+                    title = soup.find('h1',attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()
                     category_dl = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a',attrs={'class':'elementor-post-info__terms-list-item'})
                 except:
                     logging.info(f'Error : {link}')
                     continue
                 category_dl = category_dl[0].text
-                if soup.find('h1',attrs={'class': 'elementor-heading-title elementor-size-default'
-                }).text.strip().find('รู้หรือไม่') == -1 and category_dl is not None and category_dl not in constants.CATEGORY_DELETE_DAILYNEWS:
+                if title.find('รู้หรือไม่') == -1 and title.find('คลิป') == -1 and category_dl is not None and category_dl not in constants.CATEGORY_DELETE_DAILYNEWS:
                     all_links.add(link)
                     logging.info(link)
             if min_date < from_date:
