@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 from config import config
 from model import RawNewsEntity
 from util import constants
+from database import db
 
 from agency import Agency
 
@@ -37,7 +38,8 @@ class MatichonAgency(Agency):
 
     async def scrap_links(self, index_url, from_date, to_date, max_news):
 
-        all_links = set()
+        all_links = list()
+        preCategory = index_url.split('/')[3]
         for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
             soup = await self.scrap_html(index_url+'page/'+str(page_number))
             if soup is None:
@@ -68,14 +70,14 @@ class MatichonAgency(Agency):
                     continue
                 category_dl = category_dl[-1].text
                 if category_dl not in constants.CATEGORY_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1:
-                    all_links.add(link)
+                    all_links.append((link, preCategory))
                     logging.info(link)
             if min_date < from_date:
                 break
 
         return all_links
 
-    async def call(self, url) -> RawNewsEntity:
+    async def call(self, url, preCategory) -> RawNewsEntity:
         soup = await self.scrap_html(url)
         if soup is None:
             logging.error(f'failed to obtain {url}')
@@ -101,21 +103,51 @@ class MatichonAgency(Agency):
             sub_category = sub_category.find_all('span')
             sub_category = list(map(lambda s: s.text.strip(), sub_category))
             sub_category = sub_category[2:-1]
+            try:
+                for i in range(len(sub_category)):
+                    sub_category[i] = category = constants.MATICHON_CATEGORY_MAPPER[sub_category[i]]
+            except:
+                logging.info(f'Error mapping sub_category')
+            if category in sub_category:
+                sub_category.remove(category)
             sub_category = ','.join(sub_category)
             tags = None
-        except:
+
+            if category != preCategory:
+                if sub_category != '':
+                    sub_category = sub_category + ',' + preCategory
+                else:
+                    sub_category = preCategory
+            try:
+                query = db.query(RawNewsEntity.sub_category).filter(RawNewsEntity.link == url)
+                if query is not None:
+                    _sub_category = query[0][0]
+                    if _sub_category is not None:
+                        _sub_category = _sub_category.split(',')
+                        sub_category = sub_category.split(',')
+                        for i in sub_category:
+                            if i not in _sub_category:
+                                _sub_category.append(i)
+                        _sub_category = ','.join(_sub_category)
+                        db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.sub_category: _sub_category})
+                        db.commit()
+            except:
+                logging.error(f'Error query db')
+                pass
+        except Exception as err:
             logging.info(f'Something went wrong')
+            logging.error(err)
         finally:
-            logging.info(f'{category}')
+            logging.info(f'category: {category}')
             if sub_category == '':
                 sub_category = None
-            logging.info(f'{sub_category}')
+            logging.info(f'sub_category: {sub_category}')
 
         return RawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
-                             source='MATICHON',
+                             source='NEW MATICHON',
                              link=url,
                              category=category,
                              tags=tags,
@@ -124,7 +156,7 @@ class MatichonAgency(Agency):
 
     async def scrap(self) -> List[RawNewsEntity]:
         index_urls = self.config['indexes_matichon']
-        links = set()
+        links = list()
         for index_url in index_urls:
             _links = await self.scrap_links(index_url,
                                             from_date=datetime.now() -
@@ -132,8 +164,8 @@ class MatichonAgency(Agency):
                                                 days=self.config['since_datedelta']),
                                             to_date=datetime.now(),
                                             max_news=self.config['max_news_per_batch'])
-            links.update(_links)
+            links.extend(_links)
 
         logging.info(f'number of link = {len(links)}')
-        entities = await asyncio.gather(*[self.call(link) for link in links])
+        entities = await asyncio.gather(*[self.call(link[0], link[1]) for link in links])
         return list(filter(lambda entity: entity is not None, entities))
