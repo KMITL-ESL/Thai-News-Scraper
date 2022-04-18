@@ -10,7 +10,7 @@ import attr
 import requests
 from bs4 import BeautifulSoup
 from config import config
-from model import RawNewsEntity
+from model import MatichonRawNewsEntity
 from util import constants
 from database import db
 
@@ -40,7 +40,8 @@ class MatichonAgency(Agency):
 
         all_links = list()
         preCategory = index_url.split('/')[3]
-        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
+        # for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
+        for page_number in range(10,30):
             soup = await self.scrap_html(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
@@ -52,7 +53,9 @@ class MatichonAgency(Agency):
                 date_texts = (articles.find_all('span', attrs={'class': 'td-post-date'}))
                 date_texts = list(map(lambda date_text: date_text.find('time',attrs={'class': 
                     'entry-date updated td-module-date'}).text, date_texts))
-                articles = soup.find_all('a',attrs={'class':'ud-module-link'}, href=True)
+                articles = soup.find_all('div', attrs={'class':'item-details'})
+                articles = list(map(lambda article: article.find('h3', attrs={'class':'entry-title td-module-title'}), articles))
+                articles = list(map(lambda link: link.find('a',  href=True), articles))
                 dates = list(map(lambda date_text: self.parse_date(date_text), date_texts))
                 min_date = min(dates)
                 max_date = max(dates)
@@ -63,13 +66,13 @@ class MatichonAgency(Agency):
             for date, link in zip(dates, links):
                 soup = await self.scrap_html(link)
                 try:
-                    category_dl = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
+                    category = soup.find('div', attrs={'class': 'entry-crumbs'}).find_all('span', attrs={'class': ''})
                     title_dl = soup.find('h1', attrs={'class': 'entry-title'}).text.strip()
                 except:
                     logging.info(f'Error : {link}')
                     continue
-                category_dl = category_dl[-1].text
-                if category_dl not in constants.CATEGORY_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1:
+                category = category[-1].text
+                if category not in constants.CATEGORY_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1:
                     all_links.append((link, preCategory))
                     logging.info(link)
             if min_date < from_date:
@@ -77,7 +80,7 @@ class MatichonAgency(Agency):
 
         return all_links
 
-    async def call(self, url, preCategory) -> RawNewsEntity:
+    async def call(self, url, preCategory) -> MatichonRawNewsEntity:
         soup = await self.scrap_html(url)
         if soup is None:
             logging.error(f'failed to obtain {url}')
@@ -119,7 +122,7 @@ class MatichonAgency(Agency):
                 else:
                     sub_category = preCategory
             try:
-                query = db.query(RawNewsEntity.sub_category).filter(RawNewsEntity.link == url)
+                query = db.query(MatichonRawNewsEntity.sub_category).filter(MatichonRawNewsEntity.link == url)
                 if query is not None:
                     _sub_category = query[0][0]
                     if _sub_category is not None:
@@ -129,13 +132,13 @@ class MatichonAgency(Agency):
                             if i not in _sub_category:
                                 _sub_category.append(i)
                         _sub_category = ','.join(_sub_category)
-                        db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.sub_category: _sub_category})
+                        db.query(MatichonRawNewsEntity).filter(MatichonRawNewsEntity.link == url).update({MatichonRawNewsEntity.sub_category: _sub_category})
                         db.commit()
             except:
-                logging.error(f'Error query db')
+                # logging.info(f'query is None')
                 pass
         except Exception as err:
-            logging.info(f'Something went wrong')
+            logging.error(f'Something went wrong')
             logging.error(err)
         finally:
             logging.info(f'category: {category}')
@@ -143,18 +146,18 @@ class MatichonAgency(Agency):
                 sub_category = None
             logging.info(f'sub_category: {sub_category}')
 
-        return RawNewsEntity(publish_date=date,
+        return MatichonRawNewsEntity(publish_date=date,
                              title=title,
                              content=content,
                              created_at=datetime.now(),
-                             source='NEW MATICHON',
+                             source='MATICHON',
                              link=url,
                              category=category,
                              tags=tags,
                              sub_category=sub_category
                              )
 
-    async def scrap(self) -> List[RawNewsEntity]:
+    async def scrap(self) -> List[MatichonRawNewsEntity]:
         index_urls = self.config['indexes_matichon']
         links = list()
         for index_url in index_urls:
