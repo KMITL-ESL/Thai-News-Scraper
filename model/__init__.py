@@ -1,1 +1,2 @@
 from model.raw_news import RawNewsEntity
+from model.matichon_raw_news import MatichonRawNewsEntity
