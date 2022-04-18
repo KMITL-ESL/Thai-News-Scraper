@@ -233,6 +233,86 @@ agency:
      - https://thestandard.co/category/wealth/wealth-cryptocurrency/
      - https://thestandard.co/category/culture/art-design/
      - https://thestandard.co/category/culture/film/
+  prachachat:
+    scheduler:
+      - hour: 0
+        minute: 0
+      - hour: 2
+        minute: 0
+      - hour: 4
+        minute: 0
+      - hour: 6
+        minute: 0
+      - hour: 8
+        minute: 0
+      - hour: 10
+        minute: 0
+      - hour: 12
+        minute: 0
+      - hour: 14
+        minute: 0
+      - hour: 16
+        minute: 0
+      - hour: 18
+        minute: 0
+      - hour: 20
+        minute: 0
+      - hour: 22
+        minute: 0
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_prachachat:
+     - https://www.prachachat.net/finance/feed
+     - https://www.prachachat.net/marketing/feed
+     - https://www.prachachat.net/economy/feed
+     - https://www.prachachat.net/property/feed
+     - https://www.prachachat.net/politics/feed
+     - https://www.prachachat.net/world-news/feed
+     - https://www.prachachat.net/motoring/feed
+     - https://www.prachachat.net/ict/feed
+     - https://www.prachachat.net/tourism/feed
+     - https://www.prachachat.net/csr-hr/feed
+     - https://www.prachachat.net/d-life/feed
+  posttoday:
+    scheduler:
+      - hour: 0
+        minute: 0
+      - hour: 2
+        minute: 0
+      - hour: 4
+        minute: 0
+      - hour: 6
+        minute: 0
+      - hour: 8
+        minute: 0
+      - hour: 10
+        minute: 0
+      - hour: 12
+        minute: 0
+      - hour: 14
+        minute: 0
+      - hour: 16
+        minute: 0
+      - hour: 18
+        minute: 0
+      - hour: 20
+        minute: 0
+      - hour: 22
+        minute: 0
+    since_datedelta: 2
+    max_news_per_batch: 1000
+    indexes_posttoday:
+     - https://www.posttoday.com/rss/src/politics.xml
+     - https://www.posttoday.com/rss/src/entertainment.xml
+     - https://www.posttoday.com/rss/src/world.xml
+     - https://www.posttoday.com/rss/src/lifestyle.xml
+     - https://www.posttoday.com/rss/src/economy.xml
+     - https://www.posttoday.com/rss/src/money.xml
+     - https://www.posttoday.com/rss/src/property.xml
+     - https://www.posttoday.com/rss/src/sport.xml
+     - https://www.posttoday.com/rss/src/social.xml
+     - https://www.posttoday.com/rss/src/pr.xml
+
 outbound:
   post_news: http://localhost:8080/api/news
   drop_news: http://localhost:8080/api/news
