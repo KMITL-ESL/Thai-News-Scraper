@@ -40,8 +40,7 @@ class MatichonAgency(Agency):
 
         all_links = list()
         preCategory = index_url.split('/')[3]
-        # for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-        for page_number in range(10,30):
+        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
             soup = await self.scrap_html(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
