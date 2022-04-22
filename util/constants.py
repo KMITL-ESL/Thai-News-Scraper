@@ -74,11 +74,11 @@ BANGKOKBIZNEWS_CATEGORY_MAPPER = {
 }
 
 MATICHON_CATEGORY_MAPPER = {
-    "เศรษฐกิจ" : "economy",
+    "เศรษฐกิจ" : "economy", "รายงานเศรษฐกิจ" : "eco-report",
     "การศึกษา" : "education", "ศาสนา-วัฒนธรรม" : "education", "มุมบริการ" : "education",
     "การเมือง" : "politics","รายงาน-วิเคราะห์" : "politics", "สัมภาษณ์พิเศษ" : "politics","เรียงคน/ภาพข่าวสังคม" : "politics",
     "เลือกตั้ง 62" : "politics",
-    "หุ้น-การเงิน" : "stock-finance",
+    "หุ้น-การเงิน" : "stock-finance", "ภาวะหุ้นรายวัน" : "daily-stock-markets", "ตลาดหุ้น" : "stock-markets",
     "ธุรกิจ" : "business",
     "ต่างประเทศ" : "foreign",
     "ไลฟ์สไตล์" : "lifestyle","สุขภาพ-ความงาม" : "lifestyle",
