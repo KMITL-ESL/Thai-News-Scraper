@@ -70,8 +70,11 @@ class MatichonAgency(Agency):
                 except:
                     logging.info(f'Error : {link}')
                     continue
-                category = category[-1].text
-                if category not in constants.CATEGORY_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1:
+                sub_category = category[-1].text
+                cat_dl = link.split('/')[3]
+                cat_dl_th = category[1].text
+                if sub_category not in constants.SUB_CATEGORY_DELETE_MATICHON and title_dl.find('การ์ตูนรุทธ์') == -1 and title_dl.find('คลิป') == -1 \
+                   and cat_dl not in constants.CATEGORY_DELETE_MATICHON and cat_dl_th not in constants.CATEGORY_TH_DELETE_MATICHON:
                     all_links.append((link, preCategory))
                     logging.info(link)
             if min_date < from_date:
