@@ -108,11 +108,12 @@ class MatichonAgency(Agency):
             sub_category = sub_category.find_all('span')
             sub_category = list(map(lambda s: s.text.strip(), sub_category))
             sub_category = sub_category[2:-1]
-            try:
-                for i in range(len(sub_category)):
+            for i in range(len(sub_category)):
+                try:
                     sub_category[i] = category = constants.MATICHON_CATEGORY_MAPPER[sub_category[i]]
-            except:
-                logging.info(f'Error mapping sub_category')
+                except:
+                    logging.info(f'Error mapping sub_category')
+                    continue
             if category in sub_category:
                 sub_category.remove(category)
             sub_category = ','.join(sub_category)

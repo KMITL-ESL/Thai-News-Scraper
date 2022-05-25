@@ -238,44 +238,28 @@ agency:
      - https://thestandard.co/category/culture/film/
   prachachat:
     scheduler:
-      - hour: 0
-        minute: 0
-      - hour: 2
-        minute: 0
-      - hour: 4
+      - hour: 1
         minute: 0
       - hour: 6
-        minute: 0
-      - hour: 8
-        minute: 0
-      - hour: 10
-        minute: 0
-      - hour: 12
-        minute: 0
-      - hour: 14
-        minute: 0
-      - hour: 16
-        minute: 0
-      - hour: 18
-        minute: 0
-      - hour: 20
-        minute: 0
-      - hour: 22
-        minute: 0
+        minute: 15
+      - hour: 15
+        minute: 55
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_prachachat:
-     - https://www.prachachat.net/finance/feed
-     - https://www.prachachat.net/marketing/feed
-     - https://www.prachachat.net/economy/feed
-     - https://www.prachachat.net/property/feed
-     - https://www.prachachat.net/politics/feed
-     - https://www.prachachat.net/world-news/feed
-     - https://www.prachachat.net/motoring/feed
-     - https://www.prachachat.net/ict/feed
-     - https://www.prachachat.net/tourism/feed
-     - https://www.prachachat.net/csr-hr/feed
-     - https://www.prachachat.net/d-life/feed
+     - https://www.prachachat.net/finance/
+     - https://www.prachachat.net/property/
+     - https://www.prachachat.net/economy/
+     - https://www.prachachat.net/local-economy/
+     - https://www.prachachat.net/marketing/
+     - https://www.prachachat.net/politics/
+     - https://www.prachachat.net/world-news/
+     - https://www.prachachat.net/general/
+     - https://prachachat.net/motoring/
+     - https://www.prachachat.net/ict/
+     - https://www.prachachat.net/tourism/
+     - https://www.prachachat.net/csr-hr/
+     - https://www.prachachat.net/education/
   posttoday:
     scheduler:
       - hour: 0
