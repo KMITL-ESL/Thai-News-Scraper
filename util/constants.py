@@ -162,3 +162,5 @@ CATEGORY_DELETE_DAILYNEWS = ['อื่นๆ','ก้อนเมฆเล่�
 MANAGER_DELETE_TAGS = ['MGRTOP7', 'MGROnline']
 
 NEWS_MAX_NUM_PER_PAGE = 10
+
+DAILYNEWS_MAX_NUM_PER_PAGE = 50
