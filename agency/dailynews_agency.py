@@ -69,8 +69,8 @@ class DailynewsAgency(Agency):
                 if title.find('รู้หรือไม่') == -1 and title.find('คลิป') == -1 and category_dl is not None and category_dl not in constants.CATEGORY_DELETE_DAILYNEWS:
                     all_links.add(link)
                     logging.info(link)
-            if min_date < from_date:
-                break
+            # if min_date < from_date:
+            #     break
 
         return all_links
 
@@ -96,6 +96,15 @@ class DailynewsAgency(Agency):
             sub_category = sub_category.find_all('a')
             sub_category = list(map(lambda s: s.text.strip(), sub_category))
             sub_category = sub_category[1:]
+            for i in range(len(sub_category)):
+                try:
+                    sub_category[i] = category = constants.DAILYNEWS_CATEGORY_MAPPER[sub_category[i]]
+                except:
+                    logging.info(f'Error mapping {sub_category[i]}')
+                    sub_category[i] = sub_category[i]
+                    # continue
+            if category in sub_category:
+                sub_category.remove(category)
             sub_category = ','.join(sub_category)
             tags = None
         except:
