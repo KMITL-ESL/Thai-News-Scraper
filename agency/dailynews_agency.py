@@ -61,6 +61,7 @@ class DailynewsAgency(Agency):
                 soup = await self.scrap_html(link)
                 try:
                     title = soup.find('h1',attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()
+                    content = soup.find('div', attrs={'data-widget_type': 'theme-post-content.default'}).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
                     category_dl = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find_all('a',attrs={'class':'elementor-post-info__terms-list-item'})
                 except:
                     logging.info(f'Error : {link}')
@@ -87,9 +88,8 @@ class DailynewsAgency(Agency):
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date'}).text.strip()+' '+soup.find('span', 
                     attrs={'class': 'elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-time'}).text.strip()
         date = self.parse_date(date_text)
-        content = soup.find('div', attrs={'data-widget_type': 'theme-post-content.default'
-                  }).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
-        category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find('a',attrs={'class':'elementor-post-info__terms-list-item'}).text.strip()
+        content = soup.find('div', attrs={'data-widget_type': 'theme-post-content.default'}).find('div', attrs={'class': 'elementor-widget-container'}).text.strip()
+        category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'}).find('a',attrs={'class':'elementor-post-info__terms-list-item'}).text.strip()  
         try:
             category = constants.DAILYNEWS_CATEGORY_MAPPER[category]
             sub_category = soup.find('span', attrs={'class': 'elementor-post-info__terms-list'})
