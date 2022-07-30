@@ -25,11 +25,11 @@ trigger_configs = config['agency']['matichon']['scheduler']
 for trigger_config in trigger_configs:
     scheduler.add_job(scrap_matichon,
                       trigger=CronTrigger(**trigger_config))
-#bkkbiznews
-trigger_configs = config['agency']['bkkbiznews']['scheduler']
-for trigger_config in trigger_configs:
-    scheduler.add_job(scrap_bkkbiznews,
-                      trigger=CronTrigger(**trigger_config))
+# #bkkbiznews
+# trigger_configs = config['agency']['bkkbiznews']['scheduler']
+# for trigger_config in trigger_configs:
+#     scheduler.add_job(scrap_bkkbiznews,
+#                       trigger=CronTrigger(**trigger_config))
 #the_standard
 trigger_configs = config['agency']['the_standard']['scheduler']
 for trigger_config in trigger_configs:
