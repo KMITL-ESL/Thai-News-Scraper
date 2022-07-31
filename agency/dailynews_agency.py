@@ -58,6 +58,8 @@ class DailynewsAgency(Agency):
                 continue
             
             for date, link in zip(dates, links):
+                if date < from_date:
+                    break
                 soup = await self.scrap_html(link)
                 try:
                     title = soup.find('h1',attrs={'class': 'elementor-heading-title elementor-size-default'}).text.strip()

@@ -10,12 +10,14 @@ logger:
 agency:
   dailynews:
     scheduler:
-      - hour: 8
+      - hour: 1
         minute: 0
-      - hour: 13
+      - hour: 6
         minute: 15
-      - hour: 22
+      - hour: 11
         minute: 10
+      - hour: 16
+        minute: 30
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
@@ -30,11 +32,11 @@ agency:
     - https://www.dailynews.co.th/news/news_group/ทั่วไทย-กทม/ #หมวดใหม่
   mgronline:
     scheduler:
-      - hour: 8
+      - hour: 1
         minute: 0
-      - hour: 13
+      - hour: 6
         minute: 15
-      - hour: 22
+      - hour: 15
         minute: 10
     since_datedelta: 2
     max_news_per_batch: 1000
@@ -149,11 +151,11 @@ agency:
      - https://mgronline.com/south/1234/
   matichon:
     scheduler:
-      - hour: 8
+      - hour: 1
         minute: 0
-      - hour: 13
+      - hour: 6
         minute: 15
-      - hour: 22
+      - hour: 15
         minute: 10
     since_datedelta: 2
     max_news_per_batch: 1000
@@ -227,11 +229,11 @@ agency:
      - https://www.bangkokbiznews.com/judprakai-health-green/list/
   the_standard:
     scheduler:
-      - hour: 8
+      - hour: 1
         minute: 0
-      - hour: 13
+      - hour: 6
         minute: 15
-      - hour: 22
+      - hour: 15
         minute: 10
     since_datedelta: 2
     max_news_per_batch: 1000
@@ -294,29 +296,29 @@ agency:
      - https://www.prachachat.net/d-life/feed
   posttoday:
     scheduler:
-      - hour: 0
+      - hour: 17
         minute: 0
-      - hour: 2
+      - hour: 19
         minute: 0
-      - hour: 4
+      - hour: 21
         minute: 0
-      - hour: 6
+      - hour: 23
         minute: 0
-      - hour: 8
+      - hour: 1
         minute: 0
-      - hour: 10
+      - hour: 3
         minute: 0
-      - hour: 12
+      - hour: 5
         minute: 0
-      - hour: 14
+      - hour: 7
         minute: 0
-      - hour: 16
+      - hour: 9
         minute: 0
-      - hour: 18
+      - hour: 11
         minute: 0
-      - hour: 20
+      - hour: 13
         minute: 0
-      - hour: 22
+      - hour: 15
         minute: 0
     since_datedelta: 2
     max_news_per_batch: 1000
