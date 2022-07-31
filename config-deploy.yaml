@@ -10,14 +10,26 @@ logger:
 agency:
   dailynews:
     scheduler:
-      - hour: 1
-        minute: 0
+      - hour: 0
+        minute: 20
+      - hour: 2
+        minute: 50
+      - hour: 4
+        minute: 20
       - hour: 6
-        minute: 15
-      - hour: 11
-        minute: 10
+        minute: 20
+      - hour: 8
+        minute: 20
+      - hour: 10
+        minute: 20
+      - hour: 12
+        minute: 20
+      - hour: 14
+        minute: 20
       - hour: 16
-        minute: 30
+        minute: 20
+      - hour: 18
+        minute: 20
     since_datedelta: 2
     max_news_per_batch: 1000
     indexes_dailynews:
