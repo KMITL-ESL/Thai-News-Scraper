@@ -101,7 +101,7 @@ class DailynewsAgency(Agency):
             sub_category = sub_category[1:]
             for i in range(len(sub_category)):
                 try:
-                    sub_category[i] = category = constants.DAILYNEWS_CATEGORY_MAPPER[sub_category[i]]
+                    sub_category[i] = constants.DAILYNEWS_CATEGORY_MAPPER[sub_category[i]]
                 except:
                     logging.info(f'Error mapping {sub_category[i]}')
                     sub_category[i] = sub_category[i]
