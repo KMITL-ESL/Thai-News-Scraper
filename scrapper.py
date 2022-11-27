@@ -116,7 +116,7 @@ async def main():
     # await scrap_bkkbiznews()
     await scrap_the_standard()
     # await scrap_prachachat()
-    await scrap_posttoday()
+    # await scrap_posttoday()
 
 if __name__ == '__main__':
     asyncio.run(main())
