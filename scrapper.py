@@ -111,7 +111,7 @@ async def scrap_posttoday():
 
 async def main():
     await scrap_dailynews()
-    await scrap_mgronline()
+    # await scrap_mgronline()
     await scrap_matichon()
     # await scrap_bkkbiznews()
     await scrap_the_standard()

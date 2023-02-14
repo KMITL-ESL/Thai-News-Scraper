@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 from config import config
 from model import RawNewsEntity
 from util import constants
+from database import db
 
 from agency import Agency
 
@@ -39,7 +40,9 @@ class TheStandardAgency(Agency):
     async def scrap_links(self, index_url, from_date, to_date, max_news):
 
         all_links = set()
-        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
+        preCategory = index_url.split('/')[5]
+        # for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
+        for page_number in range(1, 20):
             soup = await self.scrap_html(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
@@ -70,13 +73,13 @@ class TheStandardAgency(Agency):
                     continue
                 if  soup.find('div', attrs={'class':'meta-date'}) is not None and soup.find('h1', 
                 attrs={'class': 'title'}).text.strip().find('ชมคลิป:') == -1 and category_dl not in constants.CATEGORY_DELETE_THESTANDARD:
-                    all_links.add(link)
+                    all_links.add((link, preCategory))
                     logging.info(link)
             if min_date < from_date:
                 break
         return all_links
 
-    async def call(self, url) -> RawNewsEntity:
+    async def call(self, url, preCategory) -> RawNewsEntity:
         soup = await self.scrap_html(url)
         if soup is None:
             logging.error(f'failed to obtain {url}')
@@ -100,12 +103,36 @@ class TheStandardAgency(Agency):
             sub_category = sub_category.find_all('a')
             sub_category = list(map(lambda s: s.text.strip(), sub_category))
             sub_category = sub_category[1:]
+            if category in sub_category:
+                sub_category.remove(category)
             sub_category = ','.join(sub_category)
             tags = soup.find('meta', attrs={'name': 'Keywords'})
             tags = f'{tags["content"]}'.replace(' ', '').split(',')[:-1]
             tags = ','.join(tags)
-        except:
+
+            if category != preCategory:
+                if sub_category != '':
+                    sub_category = sub_category + ',' + preCategory
+                else:
+                    sub_category = preCategory
+            try:
+                query = db.query(RawNewsEntity.sub_category).filter(RawNewsEntity.link == url)
+                if query is not None:
+                    _sub_category = query[0][0]
+                    if _sub_category is not None:
+                        _sub_category = _sub_category.split(',')
+                        sub_category = sub_category.split(',')
+                        for i in sub_category:
+                            if i not in _sub_category:
+                                _sub_category.append(i)
+                            _sub_category = ','.join(_sub_category)
+                            db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.sub_category: _sub_category})
+                            db.commit()
+            except:
+                pass
+        except Exception as err:
             logging.info(f'Something went wrong')
+            logging.error(err)
         finally:
             logging.info(f'{category}')
             if sub_category == '':
@@ -137,5 +164,5 @@ class TheStandardAgency(Agency):
             links.update(_links)
 
         logging.info(f'number of link = {len(links)}')
-        entities = await asyncio.gather(*[self.call(link) for link in links])
+        entities = await asyncio.gather(*[self.call(link[0], link[1]) for link in links])
         return list(filter(lambda entity: entity is not None, entities))
