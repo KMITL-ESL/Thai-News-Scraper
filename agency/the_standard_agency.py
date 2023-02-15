@@ -41,7 +41,7 @@ class TheStandardAgency(Agency):
 
         all_links = set()
         preCategory = index_url.split('/')[5]
-        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
+        for page_number in range(1, 2):
             soup = await self.scrap_html(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
@@ -110,14 +110,15 @@ class TheStandardAgency(Agency):
             tags = ','.join(tags)
 
             if category != preCategory:
-                if sub_category != '':
+                if sub_category != '' and preCategory not in sub_category.split(','):
                     sub_category = sub_category + ',' + preCategory
                 else:
                     sub_category = preCategory
             try:
                 query = db.query(RawNewsEntity.sub_category).filter(RawNewsEntity.link == url)
                 if query is not None:
-                    db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.sub_category: sub_category})
+                    db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.category: category \
+                        ,RawNewsEntity.sub_category: sub_category})
                     db.commit()
                 #     _sub_category = query[0][0]
                 #     if _sub_category is not None:
