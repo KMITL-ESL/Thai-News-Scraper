@@ -41,8 +41,7 @@ class TheStandardAgency(Agency):
 
         all_links = set()
         preCategory = index_url.split('/')[5]
-        # for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
-        for page_number in range(1, 20):
+        for page_number in range(1, (max_news//constants.NEWS_MAX_NUM_PER_PAGE)+1):
             soup = await self.scrap_html(index_url+'page/'+str(page_number))
             if soup is None:
                 logging.error(
@@ -101,7 +100,7 @@ class TheStandardAgency(Agency):
             content = '\n'.join(content)
             sub_category = soup.find('div', attrs={'class': 'entry-meta'})
             sub_category = sub_category.find_all('a')
-            sub_category = list(map(lambda s: s.text.strip(), sub_category))
+            sub_category = list(map(lambda s: s.text.strip().lower(), sub_category))
             sub_category = sub_category[1:]
             if category in sub_category:
                 sub_category.remove(category)
@@ -118,27 +117,31 @@ class TheStandardAgency(Agency):
             try:
                 query = db.query(RawNewsEntity.sub_category).filter(RawNewsEntity.link == url)
                 if query is not None:
-                    _sub_category = query[0][0]
-                    if _sub_category is not None:
-                        _sub_category = _sub_category.split(',')
-                        sub_category = sub_category.split(',')
-                        for i in sub_category:
-                            if i not in _sub_category:
-                                _sub_category.append(i)
-                            _sub_category = ','.join(_sub_category)
-                            db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.sub_category: _sub_category})
-                            db.commit()
+                    db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.sub_category: sub_category})
+                    db.commit()
+                #     _sub_category = query[0][0]
+                #     if _sub_category is not None:
+                #         _sub_category = _sub_category.split(',')
+                #         # print(_sub_category)
+                #         sub_category = sub_category.split(',')
+                #         # print(_sub_category)
+                #         for i in sub_category:
+                #             if i not in _sub_category:
+                #                 _sub_category.append(i)
+                #             _sub_category = ','.join(_sub_category)
+                #             db.query(RawNewsEntity).filter(RawNewsEntity.link == url).update({RawNewsEntity.sub_category: _sub_category})
+                #             db.commit()
             except:
                 pass
         except Exception as err:
             logging.info(f'Something went wrong')
             logging.error(err)
-        finally:
-            logging.info(f'{category}')
-            if sub_category == '':
-                sub_category = None
-            logging.info(f'{sub_category}')
-            logging.info(f'{tags}')
+        # finally:
+        #     logging.info(f'{category}')
+        #     if sub_category == '':
+        #         sub_category = None
+        #     logging.info(f'{sub_category}')
+        #     logging.info(f'{tags}')
 
         return RawNewsEntity(publish_date=date,
                              title=title,
